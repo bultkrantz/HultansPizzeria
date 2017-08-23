@@ -50,13 +50,12 @@
                                 }
                             }
 
-                        </div><div class="card-action">
+                        </div>
+                        <div class="card-action">
                             <a asp-controller="Dishes" asp-action="Details" asp-route-id="@dish.DishId" class="btn-floating btn-small waves-effect waves-light red lighten-1">
                                 <i class="small material-icons">add_shopping_cart</i>
-
                             </a>
                             <b>&nbsp; Add to cart</b>
-
                         </div>
                     </div>
                 </div>
@@ -65,26 +64,24 @@
     </div>
     <div id="pasta" class="col s12">
 
-        @foreach (var item in Model)
+        @foreach (var dish in Model)
             {
             <div class="col s3">
                 <div class="card">
-                    <div class="card-image" style="background: url('@item.ImageUrl') center / cover;">
-                        <span class="card-title">@item.Name</span>
+                    <div class="card-image" style="background: url('@dish.ImageUrl') center / cover;">
+                        <span class="card-title">@dish.Name</span>
                     </div>
                     <div class="card-content">
                         <p>
-                            <strong>Price: </strong>@item.Price
+                            <strong>Price: </strong>@dish.Price
                             <strong>Description: </strong>Lorem ipsum alto pervius
                         </p>
                     </div>
                     <div class="card-action">
-                        <a asp-controller="Dishes" asp-action="Details" asp-route-id="@item.DishId" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            Add to order
+                        <a asp-controller="Dishes" asp-action="Details" asp-route-id="@dish.DishId" class="btn-floating btn-small waves-effect waves-light red lighten-1">
+                            <i class="small material-icons">add_shopping_cart</i>
                         </a>
-                        <a asp-controller="Dishes" asp-action="Details" asp-route-id="@item.DishId" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            Details
-                        </a>
+                        <b>&nbsp; Add to cart</b>
                     </div>
                 </div>
             </div>
@@ -93,26 +90,24 @@
     </div>
     <div id="sallad" class="col s12">
 
-        @foreach (var item in Model)
+        @foreach (var dish in Model)
             {
             <div class="col s3">
                 <div class="card">
-                    <div class="card-image" style="background: url('@item.ImageUrl') center / cover;">
-                        <span class="card-title">@item.Name</span>
+                    <div class="card-image" style="background: url('@dish.ImageUrl') center / cover;">
+                        <span class="card-title">@dish.Name</span>
                     </div>
                     <div class="card-content">
                         <p>
-                            <strong>Price: </strong>@item.Price
+                            <strong>Price: </strong>@dish.Price
                             <strong>Description: </strong>Lorem ipsum alto pervius
                         </p>
                     </div>
                     <div class="card-action">
-                        <a asp-controller="Dishes" asp-action="Details" asp-route-id="@item.DishId" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            Add to order
+                        <a asp-controller="Dishes" asp-action="Details" asp-route-id="@dish.DishId" class="btn-floating btn-small waves-effect waves-light red lighten-1">
+                            <i class="small material-icons">add_shopping_cart</i>
                         </a>
-                        <a asp-controller="Dishes" asp-action="Details" asp-route-id="@item.DishId" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            Details
-                        </a>
+                        <b>&nbsp; Add to cart</b>
                     </div>
                 </div>
             </div>
