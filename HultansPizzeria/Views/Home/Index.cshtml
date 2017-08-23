@@ -1,0 +1,122 @@
+﻿@model IEnumerable<Dish>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Css{
+    <link href="~/css/Home/home-index.css" rel="stylesheet" />
+}
+
+<h5 class="center-align red-text text-lighten-1 text-uppercase">Menu</h5>
+
+<div class="row">
+    <ul class="tabs tabs-fixed-width">
+        <li class="tab col s3"><a class="active" href="#pizza">Pizza</a></li>
+        <li class="tab col s3"><a href="#pasta">Pasta</a></li>
+        <li class="tab col s3"><a href="#sallad">Sallad</a></li>
+    </ul>
+    <div id="pizza" class="col s12">
+        <div class="row">
+
+            @foreach (var dish in Model)
+            {
+                <div class="col s3">
+                    <div class="card">
+                        <div class="card-image" style="background: url('@dish.ImageUrl') center / cover;">
+                            <span class="card-title">@dish.Name</span>
+                        </div>
+                        <div class="card-content">
+                            <p>
+                                <b>Price: </b>@dish.Price
+                            </p>
+                            <p>
+                                <b>Description: </b>Lorem ipsum alto pervius
+                            </p>
+                            @if (dish.DishIngredients.Count > 0)
+                            {
+                                <b>Ingredients: </b>
+
+                                @for (int i = 0; i < dish.DishIngredients.Count; i++)
+                                {
+                                    if (i + 1 < dish.DishIngredients.Count)
+                                    {
+                                        <span>@dish.DishIngredients[i].Ingredient.Name, </span>
+                                    }
+                                    else
+                                    {
+                                        <span>@dish.DishIngredients[i].Ingredient.Name</span>
+                                    }
+                                }
+                            }
+
+                        </div><div class="card-action">
+                            <a asp-controller="Dishes" asp-action="Details" asp-route-id="@dish.DishId" class="btn-floating btn-small waves-effect waves-light red lighten-1">
+                                <i class="small material-icons">add_shopping_cart</i>
+
+                            </a>
+                            <b>&nbsp; Add to cart</b>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div id="pasta" class="col s12">
+
+        @foreach (var item in Model)
+            {
+            <div class="col s3">
+                <div class="card">
+                    <div class="card-image" style="background: url('@item.ImageUrl') center / cover;">
+                        <span class="card-title">@item.Name</span>
+                    </div>
+                    <div class="card-content">
+                        <p>
+                            <strong>Price: </strong>@item.Price
+                            <strong>Description: </strong>Lorem ipsum alto pervius
+                        </p>
+                    </div>
+                    <div class="card-action">
+                        <a asp-controller="Dishes" asp-action="Details" asp-route-id="@item.DishId" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            Add to order
+                        </a>
+                        <a asp-controller="Dishes" asp-action="Details" asp-route-id="@item.DishId" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div id="sallad" class="col s12">
+
+        @foreach (var item in Model)
+            {
+            <div class="col s3">
+                <div class="card">
+                    <div class="card-image" style="background: url('@item.ImageUrl') center / cover;">
+                        <span class="card-title">@item.Name</span>
+                    </div>
+                    <div class="card-content">
+                        <p>
+                            <strong>Price: </strong>@item.Price
+                            <strong>Description: </strong>Lorem ipsum alto pervius
+                        </p>
+                    </div>
+                    <div class="card-action">
+                        <a asp-controller="Dishes" asp-action="Details" asp-route-id="@item.DishId" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            Add to order
+                        </a>
+                        <a asp-controller="Dishes" asp-action="Details" asp-route-id="@item.DishId" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
