@@ -41,6 +41,7 @@ namespace HultansPizzeria.Data
                 var feta = new Ingredient { Name = "Feta" };
                 var bacon = new Ingredient { Name = "Bacon" };
                 var chicken = new Ingredient { Name = "Chicken" };
+                var pineapple = new Ingredient { Name = "Pineapple" };
 
                 //Categories
                 var pizza = new Category { Name = "Pizza" };
@@ -55,7 +56,7 @@ namespace HultansPizzeria.Data
                 //Pastas
                 var alfredo = new Dish { Name = "Alfredo", CategoryId = 2, Price = 69, ImageUrl = "../images/pastas/alfredo.jpg" };
                 var bolognese = new Dish { Name = "Bolognese", CategoryId = 2, Price = 69, ImageUrl = "../images/pastas/bolognese.jpg" };
-                var carbonara = new Dish { Name = "Carbonara", CategoryId = 2, Price = 79, ImageUrl = "../images/pastas/Hawaii.jpg" };
+                var carbonara = new Dish { Name = "Carbonara", CategoryId = 2, Price = 79, ImageUrl = "../images/pastas/carbonara.jpg" };
 
                 //Sallads
                 var chickenSallad = new Dish { Name = "Chicken", CategoryId = 3, Price = 69, ImageUrl = "../images/sallads/chicken.jpg" };
@@ -66,6 +67,11 @@ namespace HultansPizzeria.Data
                 var capricciosaCheese = new DishIngredient { Ingredient = cheese, Dish = capricciosa };
                 var capricciosaTomatoe = new DishIngredient { Ingredient = tomatoe, Dish = capricciosa };
                 var capricciosaHam = new DishIngredient { Ingredient = ham, Dish = capricciosa };
+                var margarithaCheese = new DishIngredient { Ingredient = cheese, Dish = margaritha };
+                var margarithaTomatoe = new DishIngredient { Ingredient = tomatoe, Dish = margaritha };
+                var hawaiiCheese = new DishIngredient { Ingredient = cheese, Dish = hawaii };
+                var hawaiiTomatoe = new DishIngredient { Ingredient = tomatoe, Dish = hawaii };
+                var hawaiiPineapple = new DishIngredient { Ingredient = pineapple, Dish = hawaii };
 
                 var alfredoChicken = new DishIngredient { Ingredient = chicken, Dish = alfredo };
                 var bologneseMeat = new DishIngredient { Ingredient = mincedMeat, Dish = bolognese };
@@ -76,6 +82,8 @@ namespace HultansPizzeria.Data
                 var vegetarianSalladFeta = new DishIngredient { Ingredient = feta, Dish = vegetarianSallad };
 
                 capricciosa.DishIngredients = new List<DishIngredient>();
+                margaritha.DishIngredients = new List<DishIngredient>();
+                hawaii.DishIngredients = new List<DishIngredient>();
                 alfredo.DishIngredients = new List<DishIngredient>();
                 bolognese.DishIngredients = new List<DishIngredient>();
                 carbonara.DishIngredients = new List<DishIngredient>();
@@ -95,13 +103,19 @@ namespace HultansPizzeria.Data
                 capricciosa.DishIngredients.Add(capricciosaCheese);
                 capricciosa.DishIngredients.Add(capricciosaHam);
                 capricciosa.DishIngredients.Add(capricciosaTomatoe);
+                margaritha.DishIngredients.Add(margarithaCheese);
+                margaritha.DishIngredients.Add(margarithaTomatoe);
+                hawaii.DishIngredients.Add(hawaiiCheese);
+                hawaii.DishIngredients.Add(hawaiiPineapple);
+                hawaii.DishIngredients.Add(hawaiiTomatoe);
+
 
                 //Add seed to inMem database
-                dbContext.Ingredients.AddRange(cheese, tomatoe, ham, mincedMeat, shrimp, chicken, bacon, feta);
+                dbContext.Ingredients.AddRange(cheese, tomatoe, ham, mincedMeat, shrimp, chicken, bacon, feta, pineapple);
 
                 dbContext.DishIngredient.AddRange(capricciosaCheese, capricciosaTomatoe, capricciosaHam,
                    alfredoChicken, carbonarabacon, bologneseMeat, chickenSalladChicken, shrimpSalladShrimp,
-                   vegetarianSalladFeta);
+                   vegetarianSalladFeta, hawaiiCheese, hawaiiPineapple, hawaiiTomatoe, margarithaCheese, margarithaTomatoe);
 
                 dbContext.Dishes.AddRange(capricciosa, margaritha, hawaii, alfredo, bolognese, carbonara, 
                     chickenSallad, shrimpSallad, vegetarianSallad);

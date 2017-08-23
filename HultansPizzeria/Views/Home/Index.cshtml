@@ -19,7 +19,7 @@
     <div id="pizza" class="col s12">
         <div class="row">
 
-            @foreach (var dish in Model)
+            @foreach (var dish in Model.Where(dish => dish.CategoryId == 1))
             {
                 <div class="col s3">
                     <div class="card">
@@ -64,7 +64,7 @@
     </div>
     <div id="pasta" class="col s12">
 
-        @foreach (var dish in Model)
+        @foreach (var dish in Model.Where(dish => dish.CategoryId == 2))
             {
             <div class="col s3">
                 <div class="card">
@@ -76,6 +76,23 @@
                             <strong>Price: </strong>@dish.Price
                             <strong>Description: </strong>Lorem ipsum alto pervius
                         </p>
+                        @if (dish.DishIngredients.Count > 0)
+                        {
+                            <b>Ingredients: </b>
+
+                                @for (int i = 0; i < dish.DishIngredients.Count; i++)
+                                {
+                                    if (i + 1 < dish.DishIngredients.Count)
+                                    {
+                                        <span>@dish.DishIngredients[i].Ingredient.Name, </span>
+                                    }
+                                    else
+                                    {
+                                        <span>@dish.DishIngredients[i].Ingredient.Name</span>
+                                    }
+                                }
+                        }
+
                     </div>
                     <div class="card-action">
                         <a asp-controller="Dishes" asp-action="Details" asp-route-id="@dish.DishId" class="btn-floating btn-small waves-effect waves-light red lighten-1">
@@ -90,7 +107,7 @@
     </div>
     <div id="sallad" class="col s12">
 
-        @foreach (var dish in Model)
+        @foreach (var dish in Model.Where(dish => dish.CategoryId == 3))
             {
             <div class="col s3">
                 <div class="card">
@@ -102,6 +119,23 @@
                             <strong>Price: </strong>@dish.Price
                             <strong>Description: </strong>Lorem ipsum alto pervius
                         </p>
+                        @if (dish.DishIngredients.Count > 0)
+                        {
+                            <b>Ingredients: </b>
+
+                                @for (int i = 0; i < dish.DishIngredients.Count; i++)
+                                {
+                                    if (i + 1 < dish.DishIngredients.Count)
+                                    {
+                                        <span>@dish.DishIngredients[i].Ingredient.Name, </span>
+                                    }
+                                    else
+                                    {
+                                        <span>@dish.DishIngredients[i].Ingredient.Name</span>
+                                    }
+                                }
+                        }
+
                     </div>
                     <div class="card-action">
                         <a asp-controller="Dishes" asp-action="Details" asp-route-id="@dish.DishId" class="btn-floating btn-small waves-effect waves-light red lighten-1">
