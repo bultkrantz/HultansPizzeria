@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using HultansPizzeria.Models;
 using HultansPizzeria.Data;
 using Microsoft.EntityFrameworkCore;
+using HultansPizzeria.Services;
 
 namespace HultansPizzeria.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private ICartService _cartService;
 
-        public HomeController(ApplicationDbContext context)
+        public HomeController(ApplicationDbContext context, ICartService cartService)
         {
             _context = context;
+            _cartService = cartService;
         }
         public async Task<IActionResult> Index()
         {

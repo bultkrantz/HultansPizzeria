@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using HultansPizzeria.Data;
 using HultansPizzeria.Models;
 using HultansPizzeria.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace HultansPizzeria
 {
@@ -37,9 +38,13 @@ namespace HultansPizzeria
                 .AddDefaultTokenProviders();
 
             // Add application services.
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<ICartService, CartService>();
             services.AddTransient<UserManager<ApplicationUser>>();
             services.AddTransient<RoleManager<ApplicationUser>>();
+            services.AddMemoryCache();
+            services.AddSession();
             services.AddMvc();
         }
 
@@ -60,6 +65,8 @@ namespace HultansPizzeria
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

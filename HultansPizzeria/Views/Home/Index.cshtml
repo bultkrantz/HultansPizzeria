@@ -8,6 +8,11 @@
     <link href="~/css/Home/home-index.css" rel="stylesheet" />
 }
 
+@if (@TempData["success"] != null)
+{
+    <span id="success-message" class="alert-success">@TempData["success"]</span>
+}
+
 <h5 class="center-align red-text text-lighten-1 text-uppercase">Menu</h5>
 
 <div class="row">
@@ -52,7 +57,7 @@
 
                         </div>
                         <div class="card-action">
-                            <a asp-controller="Dishes" asp-action="Details" asp-route-id="@dish.DishId" class="btn-floating btn-small waves-effect waves-light red lighten-1">
+                            <a asp-controller="Cart" asp-action="Add" asp-route-dishId="@dish.DishId" class="btn-floating btn-small waves-effect waves-light red lighten-1">
                                 <i class="small material-icons">add_shopping_cart</i>
                             </a>
                             <b>&nbsp; Add to cart</b>
@@ -73,8 +78,10 @@
                     </div>
                     <div class="card-content">
                         <p>
-                            <strong>Price: </strong>@dish.Price
-                            <strong>Description: </strong>Lorem ipsum alto pervius
+                            <b>Price: </b>@dish.Price
+                        </p>
+                        <p>
+                            <b>Description: </b>Lorem ipsum alto pervius
                         </p>
                         @if (dish.DishIngredients.Count > 0)
                         {
@@ -95,7 +102,7 @@
 
                     </div>
                     <div class="card-action">
-                        <a asp-controller="Dishes" asp-action="Details" asp-route-id="@dish.DishId" class="btn-floating btn-small waves-effect waves-light red lighten-1">
+                        <a asp-controller="Cart" asp-action="Add" asp-route-dishId="@dish.DishId" class="btn-floating btn-small waves-effect waves-light red lighten-1">
                             <i class="small material-icons">add_shopping_cart</i>
                         </a>
                         <b>&nbsp; Add to cart</b>
@@ -116,8 +123,10 @@
                     </div>
                     <div class="card-content">
                         <p>
-                            <strong>Price: </strong>@dish.Price
-                            <strong>Description: </strong>Lorem ipsum alto pervius
+                            <b>Price: </b>@dish.Price
+                        </p>
+                        <p>
+                            <b>Description: </b>Lorem ipsum alto pervius
                         </p>
                         @if (dish.DishIngredients.Count > 0)
                         {
@@ -138,7 +147,7 @@
 
                     </div>
                     <div class="card-action">
-                        <a asp-controller="Dishes" asp-action="Details" asp-route-id="@dish.DishId" class="btn-floating btn-small waves-effect waves-light red lighten-1">
+                        <a asp-controller="Cart" asp-action="Add" asp-route-dishId="@dish.DishId" class="btn-floating btn-small waves-effect waves-light red lighten-1">
                             <i class="small material-icons">add_shopping_cart</i>
                         </a>
                         <b>&nbsp; Add to cart</b>

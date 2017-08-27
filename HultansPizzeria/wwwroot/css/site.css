@@ -1,4 +1,4 @@
-﻿body{
+﻿body {
     font-family: Roboto;
 }
 
@@ -8,4 +8,17 @@ a:hover, a:visited, a:link, a:active {
 
 .page-content {
     padding-top: 30px;
+}
+
+#success-message {
+    font-size: 20px;
+    opacity: 0;
+    width: auto;
+    position: absolute;
+    top: -50px;
+    left: -50px;
+}
+
+.flimmer {
+    visibility: hidden;
 }
