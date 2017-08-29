@@ -9,9 +9,9 @@ namespace HultansPizzeria.Services
     public class CartService : ICartService
     {
         private IHttpContextAccessor _httpContextAccessor;
-        public CartService(IHttpContextAccessor httpContextAccessor)
+        public CartService(IHttpContextAccessor httpContext)
         {
-            _httpContextAccessor = httpContextAccessor;
+            _httpContextAccessor = httpContext;
         }
 
         public Task AddToCartAsync(int dishId, string customerId)
@@ -36,5 +36,11 @@ namespace HultansPizzeria.Services
         }
 
         public void SaveCart(Cart cart) => _httpContextAccessor.HttpContext.Session.SetJson("Cart", cart);
+
+        public int CartTotal()
+        {
+            Cart cart = _httpContextAccessor.HttpContext.Session.GetJson<Cart>("Cart") ?? new Cart();
+            return cart.lineCollection.Count;
+        }
     }
 }

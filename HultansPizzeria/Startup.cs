@@ -43,7 +43,7 @@ namespace HultansPizzeria
             services.AddTransient<ICartService, CartService>();
             services.AddTransient<UserManager<ApplicationUser>>();
             services.AddTransient<RoleManager<ApplicationUser>>();
-            services.AddMemoryCache();
+            services.AddDistributedMemoryCache();
             services.AddSession();
             services.AddMvc();
         }

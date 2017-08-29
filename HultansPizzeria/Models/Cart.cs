@@ -1,40 +1,54 @@
-﻿using System.Collections.Generic;
+﻿using HultansPizzeria.Data;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HultansPizzeria.Models
 {
     public class Cart
     {
-        private List<CartItem> _lineCollection = new List<CartItem>();
+        public List<CartItem> lineCollection = new List<CartItem>();
 
         public virtual void AddItem(Dish dish, int quantity)
         {
-            CartItem item = _lineCollection.Where(p => p.Dish.DishId == dish.DishId).FirstOrDefault();
+            Cart cart = this;
+            var ingredients = new List<CartItemIngredient>();
+            dish.DishIngredients.ForEach(di => ingredients.Add(new CartItemIngredient
+            {
+                IngredientId = di.IngredientId,
+                Name = di.Ingredient.Name
+            }));
 
-            if (item == null)
+            lineCollection.Add(new CartItem()
             {
-                _lineCollection.Add(new CartItem
-                {
-                    Dish = dish,
-                    Quantity = quantity
-                });
-            }
-            else
-            {
-                item.Quantity += quantity;
-            }
+                CartItemId = Guid.NewGuid(),
+                DishId = dish.DishId,
+                Name = dish.Name,
+                Price = dish.Price,
+                Ingredients = ingredients
+            });
+           
         }
 
         public virtual void RemoveLine(Dish dish) =>
-       _lineCollection.RemoveAll(c => c.Dish.DishId == dish.DishId);
+       lineCollection.RemoveAll(c => c.DishId == dish.DishId);
 
-        public virtual int GetCartLine() => _lineCollection.Count();
+        public virtual int GetCartLine() => lineCollection.Count();
 
         public class CartItem
         {
-            public int CartLineID { get; set; }
-            public Dish Dish { get; set; }
-            public int Quantity { get; set; }
+            public Guid CartItemId { get; set; }
+            public int DishId { get; set; }
+            public string Name { get; set; }
+            public int Price { get; set; }
+            public List<CartItemIngredient> Ingredients { get; set; }
+        }
+
+        public class CartItemIngredient
+        {
+            public int IngredientId { get; set; }
+            public string Name { get; set; }
         }
     }
+   
 }

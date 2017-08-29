@@ -15,7 +15,7 @@ namespace HultansPizzeria.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            Cart cart = _cartService.GetCart() ?? new Cart();
+            Cart cart = _cartService.GetCart();
             return View(cart);
         }
     }

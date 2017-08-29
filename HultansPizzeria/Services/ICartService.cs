@@ -13,5 +13,6 @@ namespace HultansPizzeria.Services
         Task CreateOrderAsync(int customerId);
         Cart GetCart();
         void SaveCart(Cart cart);
+        int CartTotal();
     }
 }

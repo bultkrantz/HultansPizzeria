@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject ICartService CartService
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -22,54 +24,70 @@
     @RenderSection("Css", required: false)
 </head>
 <body>
+
     <nav>
         <div class="nav-wrapper red lighten-1">
             <div class="container">
                 <a href="#!" class="brand-logo">Hultans Pizzeria</a>
-                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>               
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
-                    <li>@await  Component.InvokeAsync("Cart")</li>
-                    <li><a><i data-activates="slide-out" class="small material-icons cart-sidenav">shopping_cart</i></a></li>
+                    <li id="cart-cortainer">Din varukorg: @CartService.CartTotal()&nbsp;&nbsp;</li>
+                    <li><a data-activates="slide-out" class="cart-sidenav"><i class="small material-icons">shopping_cart</i></a></li>
                     <li><a href="mobile.html">Login</a></li>
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
                     <li><a href="badges.html"><i class="small material-icons">shopping_cart</i></a></li>
                     <li><a href="mobile.html">Login</a></li>
                 </ul>
-            </div>           
+            </div>
         </div>
     </nav>
     <div class="container page-content">
         @RenderBody()
 
-        <ul id="slide-out" class="side-nav">
-        
-        </ul>
-    </div>
+        <div id="slide-out" class="side-nav">
+            <h5 class="text-center">Varukorg</h5>
+            <ul class="collection">
+                @foreach (var dish in CartService.GetCart().lineCollection)
+                {
+                    <li class="collection-item">
+                        <div>
+                            <b>@dish.Name</b>, @dish.Price kr
+                            <a href="#!" data-tooltip="Delete" data-position="bottom" data-delay="50" class="secondary-content tooltipped"><i class="material-icons red-text">delete</i></a>
+                            <a href="#!" data-tooltip="Ingredients" data-position="bottom" data-delay="50" class="secondary-content tooltipped"><i class="material-icons teal-text">edit</i></a>
+                        </div>
+                    </li>                  
+                }
+            </ul>
+            <button class="btn waves-effect waves-light red lighten-1" type="submit" name="action">
+                Betala
+                <i class="material-icons right">credit_card</i>
+            </button>
+        </div>
 
 
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/lib/materialize/dist/js/materialize.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
+        <environment include="Development">
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+            <script src="~/lib/materialize/dist/js/materialize.min.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+        </environment>
+        <environment exclude="Development">
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+            </script>
+            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+            </script>
+            <script src="~/js/site.min.js" asp-append-version="true"></script>
+        </environment>
 
-    @RenderSection("Scripts", required: false)
+        @RenderSection("Scripts", required: false)
 </body>
 </html>
