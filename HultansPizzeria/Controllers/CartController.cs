@@ -20,10 +20,8 @@ namespace HultansPizzeria.Controllers
             _cartService = cartService;
         }
 
-        public IActionResult Add(int dishId, int? quantity)
+        public IActionResult Add(int dishId)
         {
-            //TODO: Fix quantity in html
-            quantity = 1;
             try
             {
                 Cart cart = _cartService.GetCart();
@@ -31,14 +29,12 @@ namespace HultansPizzeria.Controllers
                               .ThenInclude(di => di.Ingredient).FirstOrDefault(d => d.DishId == dishId);
                 cart.AddItem(dish, 1);
                 _cartService.SaveCart(cart);
-                TempData["success"] = $"{quantity}st {dish.Name} lades till i varukorgen";
             }
             catch (Exception)
             {
                 throw;
             }
-            return RedirectToAction("Index", "Home", null);
-
+            return PartialView("_CartPartial");
         }
 
 
@@ -54,21 +50,20 @@ namespace HultansPizzeria.Controllers
                 Cart cart = _cartService.GetCart();
                 var cartItem = cart.lineCollection.FirstOrDefault(c => c.CartItemId == cartItemId);
                 _cartService.RemoveFromCart(cartItem);
-                TempData["Success"] = $"{cartItem.Name} togs bort från varukorgen";
             }
             catch (Exception)
             {
                 throw;
             }
 
-            return RedirectToAction("Index", "Home", null);
+            return PartialView("_CartPartial");
         }
 
         public IActionResult Edit(Guid cartItemId)
         {
             Cart cart = _cartService.GetCart();
             var cartItem = cart.lineCollection.FirstOrDefault(c => c.CartItemId == cartItemId);            
-            return PartialView("_Cart", cartItem);
+            return PartialView("_CartModalPartial", cartItem);
         }
 
         public IActionResult SaveModification(Guid cartItemId, List<int> ingredients)

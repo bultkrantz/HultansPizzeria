@@ -1,0 +1,149 @@
+﻿@model IEnumerable<Dish>
+
+<h5 class="center-align red-text text-lighten-1 text-uppercase">Menu</h5>
+<ul class="tabs tabs-fixed-width">
+    <li class="tab col s3"><a class="active" href="#pizza">Pizza</a></li>
+    <li class="tab col s3"><a href="#pasta">Pasta</a></li>
+    <li class="tab col s3"><a href="#sallad">Sallad</a></li>
+</ul>
+<div id="pizza" class="col s12">
+    <div class="row">
+
+        @foreach (var dish in Model.Where(dish => dish.CategoryId == 1))
+            {
+            <div class="col m3 s6">
+                <div class="card">
+                    <div class="card-image" style="background: url('@dish.ImageUrl') center / cover;">
+                        <span class="card-title">@dish.Name</span>
+                    </div>
+                    <div class="card-content">
+                        <p>
+                            <b>Price: </b>@dish.Price
+                        </p>
+                        <p>
+                            <b>Description: </b>Lorem ipsum alto pervius
+                        </p>
+                        @if (dish.DishIngredients.Count > 0)
+                        {
+                            <b>Ingredients: </b>
+
+                                    @for (int i = 0; i < dish.DishIngredients.Count; i++)
+                                    {
+                                        if (i + 1 < dish.DishIngredients.Count)
+                                        {
+                                            <span>@dish.DishIngredients[i].Ingredient.Name, </span>
+                                        }
+                                        else
+                                        {
+                                            <span>@dish.DishIngredients[i].Ingredient.Name</span>
+                                        }
+                                    }
+                        }
+
+                    </div>
+                    <div class="card-action">
+                        <a asp-controller="Cart" asp-action="Add" asp-route-dishId="@dish.DishId" onclick="toastAdd('@dish.Name')"
+                           data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#cart-container"
+                           class="btn-floating btn-small waves-effect waves-light red lighten-1">
+                            <i class="small material-icons">add_shopping_cart</i>
+                        </a>
+                        <b>&nbsp; Köp</b>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div id="pasta" class="col s12">
+
+    @foreach (var dish in Model.Where(dish => dish.CategoryId == 2))
+            {
+        <div class="col m3 s6">
+            <div class="card">
+                <div class="card-image" style="background: url('@dish.ImageUrl') center / cover;">
+                    <span class="card-title">@dish.Name</span>
+                </div>
+                <div class="card-content">
+                    <p>
+                        <b>Price: </b>@dish.Price
+                    </p>
+                    <p>
+                        <b>Description: </b>Lorem ipsum alto pervius
+                    </p>
+                    @if (dish.DishIngredients.Count > 0)
+                    {
+                        <b>Ingredients: </b>
+
+                                @for (int i = 0; i < dish.DishIngredients.Count; i++)
+                                {
+                                    if (i + 1 < dish.DishIngredients.Count)
+                                    {
+                                        <span>@dish.DishIngredients[i].Ingredient.Name, </span>
+                                    }
+                                    else
+                                    {
+                                        <span>@dish.DishIngredients[i].Ingredient.Name</span>
+                                    }
+                                }
+                    }
+
+                </div>
+                <div class="card-action">
+                    <a asp-controller="Cart" asp-action="Add" asp-route-dishId="@dish.DishId" onclick="toastAdd('@dish.Name')"
+                       data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#cart-container"
+                       class="btn-floating btn-small waves-effect waves-light red lighten-1">
+                        <i class="small material-icons">add_shopping_cart</i>
+                    </a>
+                    <b>&nbsp; Köp</b>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+<div id="sallad" class="col s12">
+
+    @foreach (var dish in Model.Where(dish => dish.CategoryId == 3))
+            {
+        <div class="col m3 s6">
+            <div class="card">
+                <div class="card-image" style="background: url('@dish.ImageUrl') center / cover;">
+                    <span class="card-title">@dish.Name</span>
+                </div>
+                <div class="card-content">
+                    <p>
+                        <b>Price: </b>@dish.Price
+                    </p>
+                    <p>
+                        <b>Description: </b>Lorem ipsum alto pervius
+                    </p>
+                    @if (dish.DishIngredients.Count > 0)
+                    {
+                        <b>Ingredients: </b>
+
+                                @for (int i = 0; i < dish.DishIngredients.Count; i++)
+                                {
+                                    if (i + 1 < dish.DishIngredients.Count)
+                                    {
+                                        <span>@dish.DishIngredients[i].Ingredient.Name, </span>
+                                    }
+                                    else
+                                    {
+                                        <span>@dish.DishIngredients[i].Ingredient.Name</span>
+                                    }
+                                }
+                    }
+
+                </div>
+                <div class="card-action">
+                    <a asp-controller="Cart" asp-action="Add" asp-route-dishId="@dish.DishId" onclick="toastAdd('@dish.Name')"
+                       data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#cart-container"
+                       class="btn-floating btn-small waves-effect waves-light red lighten-1">
+                        <i class="small material-icons">add_shopping_cart</i>
+                    </a>
+                    <b>&nbsp; Köp</b>
+                </div>
+            </div>
+        </div>
+    }
+</div>

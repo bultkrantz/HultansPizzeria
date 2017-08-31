@@ -14,7 +14,3 @@ $(document).ready(function () {
     $('.tooltipped').tooltip({ delay: 50 });
 
 });
-
-if ($('#success-message').length) {
-    Materialize.toast($('#success-message').text(), 3000);
-}

@@ -1,0 +1,52 @@
+﻿@inject ICartService CartService
+
+@{
+            var total = 0;
+}
+<h5 class="center-align red-text text-lighten-1 text-uppercase">Beställning</h5>
+
+<ul class="collection cart">
+    @if (CartService.GetCart().lineCollection.Count() < 1)
+            {
+        <li class="collection-item">
+            <blockquote>
+                <b>Varukorgen är tom</b>
+            </blockquote>
+        </li>
+    }
+
+
+    @foreach (var cartItem in CartService.GetCart().lineCollection)
+            {
+                total += cartItem.Price;
+        <li class="collection-item">
+            <blockquote>
+                <b>@cartItem.Name</b>, @cartItem.Price kr<br />
+                <a asp-controller="Cart" asp-action="Remove" asp-route-cartItemId="@cartItem.CartItemId" onclick="toastRemove('@cartItem.Name')"
+                   data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#cart-container"
+                   data-tooltip="Ta bort" data-position="bottom" data-delay="50" class="right tooltipped"><i class="material-icons red-text">delete</i></a>
+                <a onclick="myFunc('@cartItem.CartItemId')" class="modal-trigger right tooltipped" href="#cart-modal" data-tooltip="Modifiera" data-position="bottom" data-delay="50"><i class="material-icons teal-text">edit</i></a>
+
+                @for (int i = 0; i < cartItem.Ingredients.Count(); i++)
+                {
+                    if (i + 1 < cartItem.Ingredients.Count())
+                    {
+                        <span>@cartItem.Ingredients[i].Name, </span>
+                    }
+                    else
+                    {
+                        <span>@cartItem.Ingredients[i].Name</span>
+                    }
+                }
+
+            </blockquote>
+
+        </li>
+    }
+</ul>
+
+<h5><b>Total: </b>@total kr</h5>
+<a asp-controller="Order" asp-action="Checkout" class="btn waves-effect waves-light red lighten-1">
+    Till kassan
+    <i class="material-icons right">credit_card</i>
+</a>
