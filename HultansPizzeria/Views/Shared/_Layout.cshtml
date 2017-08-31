@@ -1,5 +1,4 @@
-﻿@inject ICartService CartService
-
+﻿
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,12 +26,36 @@
                 <a href="#!" class="brand-logo">Hultans Pizzeria</a>
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
-                    @*<li id="cart-cortainer">Din varukorg: @CartService.CartTotal()&nbsp;&nbsp;</li>
-                    <li><a data-activates="slide-out" class="cart-sidenav"><i class="small material-icons">shopping_cart</i></a></li>*@
-                    <li><a href="mobile.html">Login</a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a href="#!">@User.Identity.Name</a></li>
+                        <li>
+                            <form asp-controller="Account" asp-action="Logout" method="post">
+                                <button class="waves-effect waves-light btn" type="submit">Logga ut</button>
+                            </form>
+                        </li>
+
+                    }
+                    else
+                    {
+                        <li><a class="waves-effect waves-light btn" asp-controller="Account" asp-action="Login">Logga in</a></li>
+
+                    }
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
-                    <li><a href="mobile.html">Login</a></li>
+                    @if (User != null)
+                    {
+                        <li><a href="#!">@User.Identity.Name</a></li>
+                        <li>
+                            <form asp-controller="Account" asp-action="Logout" method="post">
+                                <button class="waves-effect waves-light btn" type="submit">Logga ut</button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li><a asp-controller="Account" asp-action="Login">Logga in</a></li>
+                    }
                 </ul>
             </div>
         </div>
@@ -45,7 +68,6 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/materialize/dist/js/materialize.min.js"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
         <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
@@ -56,7 +78,6 @@
                 crossorigin="anonymous"
                 integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
         </script>
-        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 

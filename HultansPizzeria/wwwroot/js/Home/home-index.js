@@ -1,5 +1,5 @@
 ﻿
-function myFunc(id) {
+function getModifyModal(id) {
     $.get('Cart/Edit', { cartItemId: id }, function (data) {
         $('#cart-modal').html(data);
     });
@@ -10,6 +10,7 @@ function toastAdd(name) {
 };
 
 function toastRemove(name) {
+    $('.tooltipped').tooltip("close");
     Materialize.toast(name + ' togs bort från varukorgen', 3000);
 };
 

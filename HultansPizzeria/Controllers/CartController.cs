@@ -34,7 +34,7 @@ namespace HultansPizzeria.Controllers
             {
                 throw;
             }
-            return PartialView("_CartPartial");
+            return PartialView("_CartPartialScript");
         }
 
 
@@ -56,7 +56,7 @@ namespace HultansPizzeria.Controllers
                 throw;
             }
 
-            return PartialView("_CartPartial");
+            return PartialView("_CartPartialScript");
         }
 
         public IActionResult Edit(Guid cartItemId)
@@ -73,7 +73,7 @@ namespace HultansPizzeria.Controllers
             var newIngredients = _cartService.GetIngredients().Where(i => ingredients.Contains(i.IngredientId)).ToList();
             cartItem.Ingredients = newIngredients;
             _cartService.Update(cartItem);
-            return PartialView("_CartPartial");
+            return PartialView("_CartPartialScript");
         }
     }
 }
