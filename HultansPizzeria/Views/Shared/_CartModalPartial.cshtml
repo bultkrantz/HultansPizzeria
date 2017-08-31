@@ -2,7 +2,9 @@
 @inject ICartService CartService
 
 
-<form asp-controller="Cart" asp-action="SaveModification" method="post">
+<form asp-controller="Cart" asp-action="SaveModification"
+      data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#cart-container">
+
     <div class="modal-content">
         <h4 class="red-text ligth-red-text">Modifiera din måltid</h4>
         <h5><b>@Model.Name</b></h5>
@@ -42,7 +44,7 @@
 
     </div>
     <div class="modal-footer">
-        <button type="submit" class="modal-action modal-close waves-effect waves-green btn">Spara ändringar</button>
+        <button onclick="toastEdit()" type="submit" class="modal-action modal-close waves-effect waves-green btn">Spara ändringar</button>
         <button type="button" class="modal-action modal-close waves-effect waves-yellow btn-flat ">Stäng</button>
     </div>
 </form>

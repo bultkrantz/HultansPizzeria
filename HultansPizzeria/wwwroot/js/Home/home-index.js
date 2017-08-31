@@ -12,3 +12,7 @@ function toastAdd(name) {
 function toastRemove(name) {
     Materialize.toast(name + ' togs bort från varukorgen', 3000);
 };
+
+function toastEdit() {
+    Materialize.toast('Ändringar sparade', 3000);
+};

@@ -73,7 +73,7 @@ namespace HultansPizzeria.Controllers
             var newIngredients = _cartService.GetIngredients().Where(i => ingredients.Contains(i.IngredientId)).ToList();
             cartItem.Ingredients = newIngredients;
             _cartService.Update(cartItem);
-            return RedirectToAction("Index", "Home", null);
+            return PartialView("_CartPartial");
         }
     }
 }
