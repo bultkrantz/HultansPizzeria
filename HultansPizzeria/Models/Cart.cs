@@ -16,7 +16,8 @@ namespace HultansPizzeria.Models
             dish.DishIngredients.ForEach(di => ingredients.Add(new CartItemIngredient
             {
                 IngredientId = di.IngredientId,
-                Name = di.Ingredient.Name
+                Name = di.Ingredient.Name,
+                AddToDish = true
             }));
 
             lineCollection.Add(new CartItem()
@@ -30,25 +31,12 @@ namespace HultansPizzeria.Models
            
         }
 
-        public virtual void RemoveLine(Dish dish) =>
-       lineCollection.RemoveAll(c => c.DishId == dish.DishId);
+        public virtual void RemoveLine(CartItem cartItem) =>
+       lineCollection.RemoveAll(c => c.CartItemId == cartItem.CartItemId);
 
-        public virtual int GetCartLine() => lineCollection.Count();
+        public virtual int GetCartLine() => lineCollection.Count();  
 
-        public class CartItem
-        {
-            public Guid CartItemId { get; set; }
-            public int DishId { get; set; }
-            public string Name { get; set; }
-            public int Price { get; set; }
-            public List<CartItemIngredient> Ingredients { get; set; }
-        }
-
-        public class CartItemIngredient
-        {
-            public int IngredientId { get; set; }
-            public string Name { get; set; }
-        }
+     
     }
    
 }

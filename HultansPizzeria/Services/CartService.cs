@@ -3,15 +3,21 @@ using System.Threading.Tasks;
 using HultansPizzeria.Models;
 using Microsoft.AspNetCore.Http;
 using HultansPizzeria.Extensions;
+using System.Collections.Generic;
+using static HultansPizzeria.Models.Cart;
+using HultansPizzeria.Data;
+using System.Linq;
 
 namespace HultansPizzeria.Services
 {
     public class CartService : ICartService
     {
         private IHttpContextAccessor _httpContextAccessor;
-        public CartService(IHttpContextAccessor httpContext)
+        private ApplicationDbContext _context;
+        public CartService(IHttpContextAccessor httpContext, ApplicationDbContext context)
         {
             _httpContextAccessor = httpContext;
+            _context = context;
         }
 
         public Task AddToCartAsync(int dishId, string customerId)
@@ -30,9 +36,11 @@ namespace HultansPizzeria.Services
             return cart;
         }
 
-        public void RemoveFromCart(int dishId, string customerId)
+        public void RemoveFromCart(CartItem cartItem)
         {
-            throw new NotImplementedException();
+            Cart cart = GetCart();
+            cart.lineCollection.RemoveAll(c => c.CartItemId == cartItem.CartItemId);
+            SaveCart(cart);
         }
 
         public void SaveCart(Cart cart) => _httpContextAccessor.HttpContext.Session.SetJson("Cart", cart);
@@ -41,6 +49,22 @@ namespace HultansPizzeria.Services
         {
             Cart cart = _httpContextAccessor.HttpContext.Session.GetJson<Cart>("Cart") ?? new Cart();
             return cart.lineCollection.Count;
+        }
+
+        public List<CartItemIngredient> GetIngredients()
+        {
+            var cartItemIngredients = new List<CartItemIngredient>();
+            var ingredients = _context.Ingredients.ToList();
+            ingredients.ForEach(i => cartItemIngredients.Add(new CartItemIngredient { IngredientId = i.IngredientId, Name = i.Name }));
+            return cartItemIngredients;
+        }
+
+        public void Update(CartItem cartItem)
+        {
+            RemoveFromCart(cartItem);
+            Cart cart = GetCart();
+            cart.lineCollection.Add(cartItem);
+            SaveCart(cart);
         }
     }
 }

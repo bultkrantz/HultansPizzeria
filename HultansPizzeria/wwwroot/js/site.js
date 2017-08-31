@@ -3,7 +3,7 @@ $(document).ready(function () {
     $('ul.tabs').tabs({
         swipeable: true
     });
-    $('.tooltipped').tooltip({ delay: 50 });
+    $('.modal').modal();
     $('.collapsible').collapsible();
     $('.cart-sidenav').sideNav({
         menuWidth: 300, // Default is 300
@@ -11,29 +11,10 @@ $(document).ready(function () {
         closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
         draggable: true, // Choose whether you can drag to open on touch screens,
     });
- 
+    $('.tooltipped').tooltip({ delay: 50 });
+
 });
 
-var addToCart = function (dishId) {
-    var container = $('#cart-cortainer');
-    $.get("/Cart/Add", { dishId: dishId }, function (data) { container.html(data); });
-};
-
-
 if ($('#success-message').length) {
-
-    $('#success-message').animate({
-        opacity: 1,
-        left: '50px',
-        top: '80px'
-    });
-
-    setTimeout(function () {
-        $('#success-message').animate({
-            opacity: 0,
-            left: '-50px',
-            top: '-50px'
-        });
-    }, 2000);
-
+    Materialize.toast($('#success-message').text(), 3000);
 }

@@ -1,0 +1,48 @@
+﻿@model CartItem
+@inject ICartService CartService
+
+
+<form asp-controller="Cart" asp-action="SaveModification" method="post">
+    <div class="modal-content">
+        <h4 class="red-text ligth-red-text">Modifiera din måltid</h4>
+        <h5><b>@Model.Name</b></h5>
+        <h6>
+            @for (int i = 0; i < Model.Ingredients.Count(); i++)
+            {
+                if (i + 1 < Model.Ingredients.Count())
+                {
+                    <span>@Model.Ingredients[i].Name, </span>
+                }
+                else
+                {
+                    <span>@Model.Ingredients[i].Name</span>
+                }
+            }
+        </h6>
+        <div class="divider"></div>
+        <br />
+
+        <input hidden name="cartItemId" value="@Model.CartItemId" />
+        <div class="row">
+            @foreach (var ingredient in CartService.GetIngredients())
+            {
+                <div class="col s4">
+                    @if (Model.Ingredients.Select(i => i.IngredientId).Contains(ingredient.IngredientId))
+                {
+                        <input type="checkbox" id="@ingredient.IngredientId" value="@ingredient.IngredientId" checked name="ingredients" />
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="@ingredient.IngredientId" value="@ingredient.IngredientId" name="ingredients" />
+                    }
+                    <label for="@ingredient.IngredientId">@ingredient.Name</label>
+                </div>
+            }
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="modal-action modal-close waves-effect waves-green btn">Spara ändringar</button>
+        <button type="button" class="modal-action modal-close waves-effect waves-yellow btn-flat ">Stäng</button>
+    </div>
+</form>

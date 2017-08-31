@@ -2,24 +2,30 @@
     font-family: Roboto;
 }
 
-/* ------ Varukorg slide-out ------ */
-#slide-out {
-    padding: 20px;
+.page-content {
+   padding: 60px;
 }
 
-.cart-buttons-container {
-    width: 100%;
+#toast-container {
+    bottom: auto !important;
+    right: auto !important;
+    top: 10%;
+    left: 7%;
+}
+
+/* ------ Varukorg------ */
+.cart {
+    max-height: 500px;
+    overflow-y: auto;
 }
 
 a:hover, a:visited, a:link, a:active {
     text-decoration: none;
 }
 
-.page-content {
-    padding-top: 30px;
-}
-
 #success-message {
+    color: white;
+    background-color: rgba(88, 250, 53, 0.58);
     font-size: 20px;
     opacity: 0;
     width: auto;

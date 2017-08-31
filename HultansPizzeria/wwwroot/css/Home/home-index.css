@@ -1,5 +1,5 @@
 ﻿.tabs-content.carousel .carousel-item {
-    height: 100%;
+    height: auto;
 }
 
 .card-content{
@@ -13,3 +13,4 @@
 .card-title {
     text-shadow: 2px 2px black;
 }
+

@@ -1,0 +1,177 @@
+﻿
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+@model List<CartItem>
+@inject ICartService CartService
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Css{
+    <link href="~/css/Checkout/checkout.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    <script src="~/js/Home/home-index.js"></script>
+}
+
+@if (@TempData["success"] != null)
+{
+    <span id="success-message" class="alert-success">@TempData["success"]</span>
+}
+
+
+<div class="row">
+    <div class="col l8 m12 s12">
+        <div class="container">
+
+            <div class="row collection">
+                <h5 class="center-align red-text text-lighten-1">Logga in</h5>
+                <h6 class="center-align">Logga in för att få rabatter på dina beställningar</h6>
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input id="username" type="text" class="validate">
+                            <label for="username">Användarnamn</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">lock</i>
+                            <input id="password" type="text" class="validate">
+                            <label for="password">Lösenord</label>
+                        </div>
+                    </div>
+                    <div class="center-align">
+                        <button class="btn waves-effect waves-light red lighten-1" type="submit">
+                            Logga in
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row collection">
+                <form action="#">
+                    <h5 class="center-align red-text text-lighten-1">Fortsätt som gäst</h5>
+                    <blockquote>
+                        <b>Leveranssätt</b>
+                    </blockquote>
+                    <p>
+                        <input required name="group1" type="radio" id="test1" />
+                        <label for="test1">Hemleverans</label>
+                    </p>
+                    <p>
+                        <input required name="group1" type="radio" id="test2" />
+                        <label for="test2">Avhämtning</label>
+                    </p>
+
+                    <blockquote>
+                        <b>Leveransuppgifter</b>
+                    </blockquote>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input required id="adress" type="text" class="validate">
+                            <label for="adress">Adress</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input required id="apartment_number" type="text" class="validate">
+                            <label for="apartment_number">Lgh.nr.</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="stair_level" type="text" class="validate">
+                            <label for="stair_level">Våning</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="door_code" type="text" class="validate">
+                            <label for="door_code">Portkod</label>
+                        </div>
+                    </div>
+
+                    <blockquote>
+                        <b>Betalningssätt</b>
+                    </blockquote>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <div class="card hoverable">
+                                <label for="mastercard" class="card-image">
+                                    <img src="~/images/mastercard.jpg" />
+                                </label>
+                            </div>
+                            <p>
+                                <input name="mastercard" type="radio" id="mastercard" />
+                            </p>
+                        </div>
+                        <div class="input-field col s6">
+                            <div class="card hoverable">
+                                <div class="card-image">
+                                    <img src="~/images/visa.jpg" />
+                                </div>
+                            </div>
+                            <input type="radio" name="payment_method"/>
+                        </div>
+                    </div>
+
+                    <div class="center-align">
+                        <button class="btn waves-effect waves-light red lighten-1" type="submit">
+                            Skicka beställning
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col l4 m12 s12">
+        @{
+            var total = 0;
+        }
+        <h5 class="center-align red-text text-lighten-1 text-uppercase">Beställning</h5>
+
+        <ul class="collection cart">
+            @if (CartService.GetCart().lineCollection.Count() < 1)
+            {
+                <li class="collection-item">
+                    <blockquote>
+                        <b>Varukorgen är tom</b>
+                    </blockquote>
+                </li>
+            }
+
+
+            @foreach (var cartItem in CartService.GetCart().lineCollection)
+            {
+                total += cartItem.Price;
+                <li class="collection-item">
+                    <blockquote>
+                        <b>@cartItem.Name</b>, @cartItem.Price kr<br />
+
+                        @for (int i = 0; i < cartItem.Ingredients.Count(); i++)
+                        {
+                            if (i + 1 < cartItem.Ingredients.Count())
+                            {
+                                <span>@cartItem.Ingredients[i].Name, </span>
+                            }
+                            else
+                            {
+                                <span>@cartItem.Ingredients[i].Name</span>
+                            }
+                        }
+
+                    </blockquote>
+
+                </li>
+            }
+        </ul>
+
+        <h5><b>Total: </b>@total kr</h5>
+    </div>
+</div>
+
