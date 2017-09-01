@@ -20,6 +20,13 @@
 
 </head>
 <body>
+    <ul id="user-dropdown" class="dropdown-content">
+        <li><a href="#!"><i class="material-icons left">settings</i>Konto</a></li>
+        @if (User.IsInRole("Admin"))
+        {
+        <li><a href="#!"><i class="material-icons left">vpn_key</i>Admin</a></li>
+        }      
+    </ul>
     <nav>
         <div class="nav-wrapper red lighten-1">
             <div class="container">
@@ -28,7 +35,7 @@
                 <ul class="right hide-on-med-and-down">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li><a href="#!">@User.Identity.Name</a></li>
+                        <li><a class="dropdown-button" href="#!" data-activates="user-dropdown"><i class="material-icons left">person</i>@User.Identity.Name</a></li>
                         <li>
                             <form asp-controller="Account" asp-action="Logout" method="post">
                                 <button class="waves-effect waves-light btn" type="submit">Logga ut</button>
