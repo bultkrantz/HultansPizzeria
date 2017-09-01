@@ -1,5 +1,7 @@
-﻿@model ApplicationUser
+﻿@model CheckoutViewModel
 @inject ICartService CartService
+@inject SignInManager<ApplicationUser> SignInManager
+
 
 @{
     ViewData["Title"] = "Checkout";
@@ -22,22 +24,22 @@
     <div class="col l8 m12 s12">
         <div class="container">
 
-            @if (Model == null)
+            @if (!SignInManager.IsSignedIn(User) || Model.User == null)
             {
                 <div class="row collection">
                     <h5 class="center-align red-text text-lighten-1">Logga in</h5>
                     <h6 class="center-align">Logga in för att få rabatter på dina beställningar</h6>
-                    <form class="col s12">
+                    <form asp-controller="Account" asp-action="Login" method="post">
                         <div class="row">
                             <div class="input-field col s6">
                                 <i class="material-icons prefix">account_circle</i>
-                                <input id="username" type="text" class="validate">
-                                <label for="username">Användarnamn</label>
+                                <input asp-for="@Model.Email" name="Email" class="validate">
+                                <label asp-for="@Model.Email">Användarnamn</label>
                             </div>
                             <div class="input-field col s6">
                                 <i class="material-icons prefix">lock</i>
-                                <input id="password" type="text" class="validate">
-                                <label for="password">Lösenord</label>
+                                <input asp-for="@Model.Email" name="Password" type="password" class="validate">
+                                <label asp-for="@Model.Email">Lösenord</label>
                             </div>
                         </div>
                         <div class="center-align">
@@ -127,7 +129,7 @@
             {
                 <div class="row collection">
                     <form action="#">
-                        <h5 class="center-align red-text text-lighten-1">Beställer som @Model.FirstName @Model.LastName</h5>
+                        <h5 class="center-align red-text text-lighten-1">Beställer som @Model.User.FirstName @Model.User.LastName</h5>
                         <blockquote>
                             <b>Leveranssätt</b>
                         </blockquote>
@@ -146,21 +148,21 @@
 
                         <div class="row">
                             <div class="input-field col s6">
-                                <input required id="adress" type="text" class="validate" value="@Model.Address">
+                                <input required id="adress" type="text" class="validate" value="@Model.User.Address">
                                 <label for="adress">Adress</label>
                             </div>
                             <div class="input-field col s6">
-                                <input required id="apartment_number" type="text" class="validate" value="@Model.ApartmentNumber">
+                                <input required id="apartment_number" type="text" class="validate" value="@Model.User.ApartmentNumber">
                                 <label for="apartment_number">Lgh.nr.</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="stair_level" type="text" class="validate" value="@Model.Floor">
+                                <input id="stair_level" type="text" class="validate" value="@Model.User.Floor">
                                 <label for="stair_level">Våning</label>
                             </div>
                             <div class="input-field col s6">
-                                <input id="door_code" type="text" class="validate" value="@Model.EntryCode">
+                                <input id="door_code" type="text" class="validate" value="@Model.User.EntryCode">
                                 <label for="door_code">Portkod</label>
                             </div>
                         </div>

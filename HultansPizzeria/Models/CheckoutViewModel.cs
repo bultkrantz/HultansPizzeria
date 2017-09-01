@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace HultansPizzeria.Models.AccountViewModels
+namespace HultansPizzeria.Models
 {
-    public class LoginViewModel
+    public class CheckoutViewModel
     {
         [Required]
         [EmailAddress]
@@ -19,5 +15,6 @@ namespace HultansPizzeria.Models.AccountViewModels
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
 
+        public ApplicationUser User { get; set; }
     }
 }

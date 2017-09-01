@@ -46,7 +46,10 @@ namespace HultansPizzeria.Controllers
         {
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
+            if (returnUrl == null)
+            {
+                returnUrl = Request.Headers["Referer"].ToString();
+            }
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
@@ -59,13 +62,17 @@ namespace HultansPizzeria.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
+                if (returnUrl == null)
+                {
+                    returnUrl = Request.Headers["Referer"].ToString();
+                }
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    return Redirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {

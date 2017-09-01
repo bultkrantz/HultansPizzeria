@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using HultansPizzeria.Models.CheckoutViewModels;
 using HultansPizzeria.Data;
 using Microsoft.AspNetCore.Identity;
 using HultansPizzeria.Models;
@@ -24,7 +23,11 @@ namespace HultansPizzeria.Controllers
         public async Task<IActionResult> Checkout()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            return View(user);
+            var vm = new CheckoutViewModel
+            {
+                User = user
+            };
+            return View(vm);
         }
     }
 }
