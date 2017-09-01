@@ -24,7 +24,13 @@ namespace HultansPizzeria.Data
             var adminUser = new ApplicationUser
             {
                 UserName = "admin@test.se",
-                Email = "admin@test.se"
+                Email = "admin@test.se",
+                FirstName = "Marcus",
+                LastName = "Hultkrantz",
+                Address = "Kungsgatan 24A",
+                EntryCode = 8888,
+                Floor = "2",
+                ApartmentNumber = "13"
             };
             var adminResult = userManager.CreateAsync(adminUser, "Pa$$word1").Result;
             userManager.AddToRoleAsync(adminUser, "Admin");

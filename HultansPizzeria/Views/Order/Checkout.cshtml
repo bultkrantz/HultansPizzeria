@@ -1,10 +1,10 @@
-﻿
+﻿@model ApplicationUser
+@inject ICartService CartService
+
 @{
     ViewData["Title"] = "Checkout";
 }
 
-@model List<CartItem>
-@inject ICartService CartService
 
 @{
     ViewData["Title"] = "Home Page";
@@ -15,12 +15,6 @@
 }
 
 @section Scripts{
-    <script src="~/js/Home/home-index.js"></script>
-}
-
-@if (@TempData["success"] != null)
-{
-    <span id="success-message" class="alert-success">@TempData["success"]</span>
 }
 
 
@@ -28,104 +22,186 @@
     <div class="col l8 m12 s12">
         <div class="container">
 
-            <div class="row collection">
-                <h5 class="center-align red-text text-lighten-1">Logga in</h5>
-                <h6 class="center-align">Logga in för att få rabatter på dina beställningar</h6>
-                <form class="col s12">
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix">account_circle</i>
-                            <input id="username" type="text" class="validate">
-                            <label for="username">Användarnamn</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix">lock</i>
-                            <input id="password" type="text" class="validate">
-                            <label for="password">Lösenord</label>
-                        </div>
-                    </div>
-                    <div class="center-align">
-                        <button class="btn waves-effect waves-light red lighten-1" type="submit">
-                            Logga in
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="row collection">
-                <form action="#">
-                    <h5 class="center-align red-text text-lighten-1">Fortsätt som gäst</h5>
-                    <blockquote>
-                        <b>Leveranssätt</b>
-                    </blockquote>
-                    <p>
-                        <input required name="group1" type="radio" id="test1" />
-                        <label for="test1">Hemleverans</label>
-                    </p>
-                    <p>
-                        <input required name="group1" type="radio" id="test2" />
-                        <label for="test2">Avhämtning</label>
-                    </p>
-
-                    <blockquote>
-                        <b>Leveransuppgifter</b>
-                    </blockquote>
-
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <input required id="adress" type="text" class="validate">
-                            <label for="adress">Adress</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <input required id="apartment_number" type="text" class="validate">
-                            <label for="apartment_number">Lgh.nr.</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <input id="stair_level" type="text" class="validate">
-                            <label for="stair_level">Våning</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="door_code" type="text" class="validate">
-                            <label for="door_code">Portkod</label>
-                        </div>
-                    </div>
-
-                    <blockquote>
-                        <b>Betalningssätt</b>
-                    </blockquote>
-
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <div class="card hoverable">
-                                <label for="mastercard" class="card-image">
-                                    <img src="~/images/mastercard.jpg" />
-                                </label>
+            @if (Model == null)
+            {
+                <div class="row collection">
+                    <h5 class="center-align red-text text-lighten-1">Logga in</h5>
+                    <h6 class="center-align">Logga in för att få rabatter på dina beställningar</h6>
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="username" type="text" class="validate">
+                                <label for="username">Användarnamn</label>
                             </div>
-                            <p>
-                                <input name="mastercard" type="radio" id="mastercard" />
-                            </p>
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">lock</i>
+                                <input id="password" type="text" class="validate">
+                                <label for="password">Lösenord</label>
+                            </div>
                         </div>
-                        <div class="input-field col s6">
-                            <div class="card hoverable">
-                                <div class="card-image">
-                                    <img src="~/images/visa.jpg" />
+                        <div class="center-align">
+                            <button class="btn waves-effect waves-light red lighten-1" type="submit">
+                                Logga in
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="row collection">
+                    <form action="#">
+                        <h5 class="center-align red-text text-lighten-1">Fortsätt som gäst</h5>
+                        <blockquote>
+                            <b>Leveranssätt</b>
+                        </blockquote>
+                        <p>
+                            <input required name="group1" type="radio" id="test1" />
+                            <label for="test1">Hemleverans</label>
+                        </p>
+                        <p>
+                            <input required name="group1" type="radio" id="test2" />
+                            <label for="test2">Avhämtning</label>
+                        </p>
+
+                        <blockquote>
+                            <b>Leveransuppgifter</b>
+                        </blockquote>
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input required id="adress" type="text" class="validate">
+                                <label for="adress">Adress</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input required id="apartment_number" type="text" class="validate">
+                                <label for="apartment_number">Lgh.nr.</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="stair_level" type="text" class="validate">
+                                <label for="stair_level">Våning</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="door_code" type="text" class="validate">
+                                <label for="door_code">Portkod</label>
+                            </div>
+                        </div>
+
+                        <blockquote>
+                            <b>Betalningssätt</b>
+                        </blockquote>
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <div class="card hoverable">
+                                    <label for="mastercard" class="card-image">
+                                        <img src="~/images/mastercard.jpg" />
+                                    </label>
                                 </div>
+                                <p>
+                                    <input name="mastercard" type="radio" id="mastercard" />
+                                </p>
                             </div>
-                            <input type="radio" name="payment_method"/>
+                            <div class="input-field col s6">
+                                <div class="card hoverable">
+                                    <div class="card-image">
+                                        <img src="~/images/visa.jpg" />
+                                    </div>
+                                </div>
+                                <input type="radio" name="payment_method" />
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="center-align">
-                        <button class="btn waves-effect waves-light red lighten-1" type="submit">
-                            Skicka beställning
-                        </button>
-                    </div>
+                        <div class="center-align">
+                            <button class="btn waves-effect waves-light red lighten-1" type="submit">
+                                Skicka beställning
+                            </button>
+                        </div>
 
-                </form>
+                    </form>
 
-            </div>
+                </div>
+            }
+            else
+            {
+                <div class="row collection">
+                    <form action="#">
+                        <h5 class="center-align red-text text-lighten-1">Beställer som @Model.FirstName @Model.LastName</h5>
+                        <blockquote>
+                            <b>Leveranssätt</b>
+                        </blockquote>
+                        <p>
+                            <input required name="group1" type="radio" id="test1" />
+                            <label for="test1">Hemleverans</label>
+                        </p>
+                        <p>
+                            <input required name="group1" type="radio" id="test2" />
+                            <label for="test2">Avhämtning</label>
+                        </p>
+
+                        <blockquote>
+                            <b>Leveransuppgifter</b>
+                        </blockquote>
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input required id="adress" type="text" class="validate" value="@Model.Address">
+                                <label for="adress">Adress</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input required id="apartment_number" type="text" class="validate" value="@Model.ApartmentNumber">
+                                <label for="apartment_number">Lgh.nr.</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="stair_level" type="text" class="validate" value="@Model.Floor">
+                                <label for="stair_level">Våning</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="door_code" type="text" class="validate" value="@Model.EntryCode">
+                                <label for="door_code">Portkod</label>
+                            </div>
+                        </div>
+
+                        <blockquote>
+                            <b>Betalningssätt</b>
+                        </blockquote>
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <div class="card hoverable">
+                                    <label for="mastercard" class="card-image">
+                                        <img src="~/images/mastercard.jpg" />
+                                    </label>
+                                </div>
+                                <p>
+                                    <input name="mastercard" type="radio" id="mastercard" />
+                                </p>
+                            </div>
+                            <div class="input-field col s6">
+                                <div class="card hoverable">
+                                    <div class="card-image">
+                                        <img src="~/images/visa.jpg" />
+                                    </div>
+                                </div>
+                                <input type="radio" name="payment_method" />
+                            </div>
+                        </div>
+
+                        <div class="center-align">
+                            <button class="btn waves-effect waves-light red lighten-1" type="submit">
+                                Skicka beställning
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            }
+
+
         </div>
     </div>
 
