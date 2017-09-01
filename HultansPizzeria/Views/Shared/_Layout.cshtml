@@ -23,7 +23,7 @@
     <nav>
         <div class="nav-wrapper red lighten-1">
             <div class="container">
-                <a href="#!" class="brand-logo">Hultans Pizzeria</a>
+                <a asp-controller="Home" asp-action="Index" class="brand-logo">Hultans Pizzeria</a>
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     @if (User.Identity.IsAuthenticated)
