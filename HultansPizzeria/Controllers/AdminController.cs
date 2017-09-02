@@ -11,24 +11,14 @@ namespace HultansPizzeria.Controllers
     public class AdminController : Controller
     {
         private ApplicationDbContext _context;
-            public AdminController(ApplicationDbContext context)
+        public AdminController(ApplicationDbContext context)
         {
             _context = context;
         }
-     
+
         public IActionResult Index()
         {
             return View();
-        }
-
-     public IActionResult Ingredients()
-        {
-            return View(_context.Ingredients.ToList());
-        }
-
-        public IActionResult Users()
-        {
-            return View(_context.Users.ToList());
         }
     }
 }

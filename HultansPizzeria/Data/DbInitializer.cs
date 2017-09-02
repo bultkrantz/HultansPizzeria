@@ -117,6 +117,8 @@ namespace HultansPizzeria.Data
 
 
                 //Add seed to inMem database
+                dbContext.Category.AddRange(pizza, pasta, sallad);
+
                 dbContext.Ingredients.AddRange(cheese, tomatoe, ham, mincedMeat, shrimp, chicken, bacon, feta, pineapple);
 
                 dbContext.DishIngredient.AddRange(capricciosaCheese, capricciosaTomatoe, capricciosaHam,

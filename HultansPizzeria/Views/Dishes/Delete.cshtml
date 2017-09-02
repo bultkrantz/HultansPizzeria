@@ -1,0 +1,18 @@
+﻿@model HultansPizzeria.Models.Dish
+@{
+    ViewData["Title"] = "Delete";
+}
+<div class="row">
+    <div class="col s4 offset-s4">
+        <blockquote>
+            <h5>Are you sure you want to delete <b>@Model.Name?</b></h5>
+        </blockquote>
+           
+           <hr />
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="DishId" />
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                <a asp-action="Index">Back to List</a>
+            </form>
+    </div>
+</div>

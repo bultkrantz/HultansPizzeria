@@ -2,11 +2,16 @@
     <div class="col s3 offset-s4">
         <h4>Administering</h4>
         <div class="collection">
-            <a asp-action="Ingredients" class="collection-item">
+            <a asp-controller="Dishes" asp-action="Index" class="collection-item">
+                <i class="material-icons left">restaurant</i>Hantera rätter
+            </a>
+
+            <a asp-controller="Ingredients" asp-action="Index" class="collection-item">
                 <i class="material-icons left">local_pizza</i>Hantera ingredienser
             </a>
-            <a asp-action="Users" class="collection-item">
-                <i class="material-icons left">supervisor_account</i>Hantera användare
+          
+            <a asp-controller="Categories" asp-action="Index" class="collection-item">
+                <i class="material-icons left">local_offer</i>Hantera Kategorier
             </a>
         </div>
     </div>

@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<HultansPizzeria.Models.Ingredient>
 @{
-    ViewData["Title"] = "Ingredients";
+    ViewData["Title"] = "Index";
 }
 <div class="row">
     <div class="col s3 offset-s4">
-        <h2>Ingredients</h2>
-        <p>
-            <a asp-action="Create">Create New</a>
-        </p>
+        <h2>Index</h2>
+        <h5>
+            <a asp-action="Create">Create New</a> | <a asp-controller="Admin" asp-action="Index">Back</a>
+        </h5>
         <table>
             <thead>
                 <tr>
@@ -19,7 +19,7 @@
             </thead>
             <tbody>
                 @foreach (var item in Model)
-            {
+                {
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)
