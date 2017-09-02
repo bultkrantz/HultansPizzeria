@@ -32,5 +32,6 @@ namespace HultansPizzeria.Data
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<DishIngredient> DishIngredient { get; set; }
         public DbSet<Category> Category { get; set; }
+        public DbSet<HultansPizzeria.Models.ApplicationUser> ApplicationUser { get; set; }
     }
 }
