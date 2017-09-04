@@ -57,6 +57,11 @@ namespace HultansPizzeria.Controllers
             var model = new IndexViewModel
             {
                 Username = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Address = user.Address,
+                ApartmentNumber = user.ApartmentNumber,
+                Floor = user.Floor,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
@@ -99,6 +104,21 @@ namespace HultansPizzeria.Controllers
                 {
                     throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
                 }
+            }
+
+            try
+            {
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Address = model.Address;
+                user.ApartmentNumber = model.ApartmentNumber;
+                user.Floor = model.Floor;
+                user.EntryCode = model.EntryCode;
+                await _userManager.UpdateAsync(user);
+            }
+            catch (Exception)
+            {
+                throw new ApplicationException($"Unexpected error occurred updating user with ID '{user.Id}'.");
             }
 
             StatusMessage = "Your profile has been updated";

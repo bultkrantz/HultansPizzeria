@@ -14,6 +14,6 @@ namespace HultansPizzeria.Models
         public string Address { get; set; }
         public string ApartmentNumber { get; set; }
         public string Floor { get; set; }
-        public int EntryCode { get; set; }
+        public string EntryCode { get; set; }
     }
 }

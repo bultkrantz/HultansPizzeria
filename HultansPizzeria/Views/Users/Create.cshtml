@@ -1,0 +1,68 @@
+﻿@model HultansPizzeria.Models.ApplicationUser
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="row">
+    <div class="col s4 offset-s4">
+
+
+        <h2>Create</h2>
+        <h4>User</h4>
+        <hr />
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="input-field">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="input-field">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="input-field">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="input-field">
+                        <label asp-for="ApartmentNumber" class="control-label"></label>
+                        <input asp-for="ApartmentNumber" class="form-control" />
+                        <span asp-validation-for="ApartmentNumber" class="text-danger"></span>
+                    </div>
+                    <div class="input-field">
+                        <label asp-for="Floor" class="control-label"></label>
+                        <input asp-for="Floor" class="form-control" />
+                        <span asp-validation-for="Floor" class="text-danger"></span>
+                    </div>
+                    <div class="input-field">
+                        <label asp-for="EntryCode" class="control-label"></label>
+                        <input asp-for="EntryCode" class="form-control" />
+                        <span asp-validation-for="EntryCode" class="text-danger"></span>
+                    </div>
+                    <div class="input-field">
+                        <label asp-for="UserName" class="control-label"></label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="input-field">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="input-field">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+</div>
