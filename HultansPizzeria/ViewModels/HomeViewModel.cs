@@ -9,6 +9,6 @@ namespace HultansPizzeria.ViewModels
     public class HomeViewModel
     {
         public List<Dish> Dishes { get; set; }
-        public Cart Cart { get; set; }
+        public List<Category> Categories { get; set; }
     }
 }

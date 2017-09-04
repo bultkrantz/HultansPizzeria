@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using HultansPizzeria.Services;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using HultansPizzeria.ViewModels;
 
 namespace HultansPizzeria.Controllers
 {
@@ -25,8 +26,13 @@ namespace HultansPizzeria.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Dishes.Include(d => d.DishIngredients)
-                              .ThenInclude(di => di.Ingredient).ToListAsync());
+            var vm = new HomeViewModel
+            {
+                Dishes = await _context.Dishes.Include(d => d.DishIngredients)
+                              .ThenInclude(di => di.Ingredient).ToListAsync(),
+                Categories = await _context.Category.ToListAsync()
+            };
+            return View(vm);
         }
 
         public IActionResult About()
