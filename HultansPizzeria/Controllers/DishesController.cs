@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HultansPizzeria.Data;
 using HultansPizzeria.Models;
+using Microsoft.AspNetCore.Authorization;
+using HultansPizzeria.ViewModels;
+using System.Collections.Generic;
 
 namespace HultansPizzeria.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DishesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -46,7 +47,11 @@ namespace HultansPizzeria.Controllers
         // GET: Dishes/Create
         public IActionResult Create()
         {
-            return View();
+            var vm = new ManageDishViewModel
+            {
+                Ingredients = _context.Ingredients.ToList()
+            };
+            return View(vm);
         }
 
         // POST: Dishes/Create
@@ -54,11 +59,23 @@ namespace HultansPizzeria.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DishId,Name,Price,ImageUrl,CategoryId")] Dish dish)
+        public async Task<IActionResult> Create([Bind("DishId,Name,Price,ImageUrl,CategoryId")] Dish dish, List<int> ingredients)
         {
+            var newIngredients = await _context.Ingredients.Where(i => ingredients.Contains(i.IngredientId)).ToListAsync();
+            var newDishIngredients = new List<DishIngredient>();
+            newIngredients.ForEach(i => newDishIngredients.Add(new DishIngredient
+            {
+                IngredientId = i.IngredientId,
+                Ingredient = i,
+                DishId = dish.DishId,
+                Dish = dish
+            }));
+
             if (ModelState.IsValid)
             {
                 _context.Add(dish);
+                await _context.SaveChangesAsync();
+                _context.DishIngredient.AddRange(newDishIngredients);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -73,12 +90,23 @@ namespace HultansPizzeria.Controllers
                 return NotFound();
             }
 
-            var dish = await _context.Dishes.SingleOrDefaultAsync(m => m.DishId == id);
+            var dish = await _context.Dishes.Include(d => d.DishIngredients).SingleOrDefaultAsync(m => m.DishId == id);
+            var ingredients = await _context.Ingredients.ToListAsync();
             if (dish == null)
             {
                 return NotFound();
             }
-            return View(dish);
+            var vm = new ManageDishViewModel
+            {
+                DishId = dish.DishId,
+                Name = dish.Name,
+                CategoryId = dish.CategoryId,
+                Price = dish.Price,
+                ImageUrl = dish.ImageUrl,
+                DishIngredients = dish.DishIngredients,
+                Ingredients = ingredients
+            };
+            return View(vm);
         }
 
         // POST: Dishes/Edit/5
@@ -86,8 +114,18 @@ namespace HultansPizzeria.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DishId,Name,Price,ImageUrl,CategoryId")] Dish dish)
+        public async Task<IActionResult> Edit(int id, [Bind("DishId,Name,Price,ImageUrl,CategoryId")] Dish dish, List<int> ingredients)
         {
+            var newIngredients = await _context.Ingredients.Where(i => ingredients.Contains(i.IngredientId)).ToListAsync();
+            var newDishIngredients = new List<DishIngredient>();
+            newIngredients.ForEach(i => newDishIngredients.Add(new DishIngredient
+            {
+                IngredientId = i.IngredientId,
+                Ingredient = i,
+                DishId = dish.DishId,
+                Dish = dish
+            }));
+
             if (id != dish.DishId)
             {
                 return NotFound();
@@ -97,6 +135,9 @@ namespace HultansPizzeria.Controllers
             {
                 try
                 {
+                    _context.RemoveRange(_context.DishIngredient.Where(di => di.DishId == dish.DishId));
+                    await _context.SaveChangesAsync();
+                    _context.DishIngredient.AddRange(newDishIngredients);
                     _context.Update(dish);
                     await _context.SaveChangesAsync();
                 }

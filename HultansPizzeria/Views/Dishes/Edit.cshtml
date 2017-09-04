@@ -1,46 +1,68 @@
-﻿@model HultansPizzeria.Models.Dish
-
+﻿@model ManageDishViewModel
 @{
     ViewData["Title"] = "Edit";
 }
-
-<h2>Edit</h2>
-
-<h4>Dish</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="DishId" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+    <div class="col s4 offset-s4">
+        <h2>Edit</h2>
+        <h4>Dish</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="DishId" />
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ImageUrl" class="control-label"></label>
+                        <input asp-for="ImageUrl" class="form-control" />
+                        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CategoryId" class="control-label"></label>
+                        <input asp-for="CategoryId" class="form-control" />
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+                    <p>Ingredients</p>
+                    <div class="row">
+                        @foreach (var ingredient in Model.Ingredients)
+                        {
+                            <div class="col s4">
+                                @if (Model.DishIngredients.Select(di => di.IngredientId).Contains(ingredient.IngredientId))
+                {
+                                    <p>
+                                        <input type="checkbox" id="@ingredient.IngredientId" name="ingredients" value="@ingredient.IngredientId" checked />
+                                        <label for="@ingredient.IngredientId">@ingredient.Name</label>
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p>
+                                        <input type="checkbox" id="@ingredient.IngredientId" name="ingredients" value="@ingredient.IngredientId" />
+                                        <label for="@ingredient.IngredientId">@ingredient.Name</label>
+                                    </p>
+                                }
+                            </div>
+                        }
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <input asp-for="CategoryId" class="form-control" />
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+        </div>
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HultansPizzeria.Data;
 using HultansPizzeria.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HultansPizzeria.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class IngredientsController : Controller
     {
         private readonly ApplicationDbContext _context;
