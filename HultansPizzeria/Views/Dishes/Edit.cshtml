@@ -34,7 +34,7 @@
                     </div>
                     <p>Ingredients</p>
                     <div class="row">
-                        @foreach (var ingredient in Model.Ingredients)
+                        @foreach (var ingredient in Model.Ingredients.OrderBy(i => i.Name))
                         {
                             <div class="col s4">
                                 @if (Model.DishIngredients.Select(di => di.IngredientId).Contains(ingredient.IngredientId))

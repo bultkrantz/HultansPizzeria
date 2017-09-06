@@ -17,5 +17,6 @@ namespace HultansPizzeria.Services
         int CartTotal();
         List<CartItemIngredient> GetIngredients();
         void Update(CartItem cartItem);
+        int CalculateTotal();
     }
 }

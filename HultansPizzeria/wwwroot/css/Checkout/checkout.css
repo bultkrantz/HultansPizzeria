@@ -3,6 +3,6 @@
 }
 
 .card-image img{
-    padding: 20px;
     height: 150px;
+    transition: 1s;
 }

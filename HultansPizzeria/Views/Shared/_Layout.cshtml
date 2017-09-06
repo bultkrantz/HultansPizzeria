@@ -24,11 +24,12 @@
         <li><a asp-controller="Manage" asp-action="Index"><i class="material-icons left">settings</i>Konto</a></li>
         @if (User.IsInRole("Admin"))
         {
-        <li><a asp-controller="Admin" asp-action="Index"><i class="material-icons left">vpn_key</i>Admin</a></li>
-        }      
+            <li><a asp-controller="Admin" asp-action="Index"><i class="material-icons left">vpn_key</i>Admin</a></li>
+        }
     </ul>
+
     <nav>
-        <div class="nav-wrapper red lighten-1">
+        <div class="nav-wrapper red lighten-1  main-nav">
             <div class="container">
                 <a asp-controller="Home" asp-action="Index" class="brand-logo">Hultans Pizzeria</a>
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>

@@ -1,7 +1,7 @@
 ﻿@model HomeViewModel
 
-<h5 class="center-align red-text text-lighten-1 text-uppercase">Menu</h5>
-<ul class="tabs tabs-fixed-width">
+<h5 class="center-align red-text text-lighten-1 text-uppercase">Meny</h5>
+<ul class="tabs tabs-fixed-width">       
     @foreach (var category in Model.Categories)
     {
         <li class="tab col s3"><a href="#@category.Name">@category.Name</a></li>
@@ -23,9 +23,7 @@
                             <p>
                                 <b>Price: </b>@dish.Price
                             </p>
-                            <p>
-                                <b>Description: </b>Lorem ipsum alto pervius
-                            </p>
+                        
                             @if (dish.DishIngredients.Count > 0)
                             {
                                 <b>Ingredients: </b>

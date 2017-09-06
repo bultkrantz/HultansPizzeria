@@ -17,6 +17,7 @@
 }
 
 @section Scripts{
+    <script src="~/js/checkout/checkout.js"></script>
 }
 
 
@@ -94,26 +95,14 @@
                             <b>Betalningssätt</b>
                         </blockquote>
 
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <div class="card hoverable">
-                                    <label for="mastercard" class="card-image">
-                                        <img src="~/images/mastercard.jpg" />
-                                    </label>
-                                </div>
-                                <p>
-                                    <input name="mastercard" type="radio" id="mastercard" />
-                                </p>
-                            </div>
-                            <div class="input-field col s6">
-                                <div class="card hoverable">
-                                    <div class="card-image">
-                                        <img src="~/images/visa.jpg" />
-                                    </div>
-                                </div>
-                                <input type="radio" name="payment_method" />
-                            </div>
-                        </div>
+                        <p>
+                            <input required name="payment" type="radio" id="mastercard" />
+                            <label for="mastercard">MasterCard</label>
+                        </p>
+                        <p>
+                            <input required name="payment" type="radio" id="visa" />
+                            <label for="visa">Visa</label>
+                        </p>
 
                         <div class="center-align">
                             <button class="btn waves-effect waves-light red lighten-1" type="submit">
@@ -171,26 +160,14 @@
                             <b>Betalningssätt</b>
                         </blockquote>
 
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <div class="card hoverable">
-                                    <label for="mastercard" class="card-image">
-                                        <img src="~/images/mastercard.jpg" />
-                                    </label>
-                                </div>
-                                <p>
-                                    <input name="mastercard" type="radio" id="mastercard" />
-                                </p>
-                            </div>
-                            <div class="input-field col s6">
-                                <div class="card hoverable">
-                                    <div class="card-image">
-                                        <img src="~/images/visa.jpg" />
-                                    </div>
-                                </div>
-                                <input type="radio" name="payment_method" />
-                            </div>
-                        </div>
+                        <p>
+                            <input required name="payment" type="radio" id="mastercard" />
+                            <label for="mastercard">MasterCard</label>
+                        </p>
+                        <p>
+                            <input required name="payment" type="radio" id="visa" />
+                            <label for="visa">Visa</label>
+                        </p>
 
                         <div class="center-align">
                             <button class="btn waves-effect waves-light red lighten-1" type="submit">

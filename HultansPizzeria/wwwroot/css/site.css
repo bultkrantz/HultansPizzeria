@@ -1,9 +1,10 @@
 ﻿body {
     font-family: Roboto;
-}
+  }
 
 .page-content {
-   padding: 60px;
+    padding: 60px;
+    height: 1000px;
 }
 
 #toast-container {
@@ -12,6 +13,7 @@
     top: 10%;
     left: 7%;
 }
+
 
 /* ------ Varukorg------ */
 .cart {

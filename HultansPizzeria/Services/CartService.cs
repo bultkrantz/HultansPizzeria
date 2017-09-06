@@ -56,7 +56,7 @@ namespace HultansPizzeria.Services
             var cartItemIngredients = new List<CartItemIngredient>();
             var ingredients = _context.Ingredients.ToList();
             ingredients.ForEach(i => cartItemIngredients.Add(new CartItemIngredient { IngredientId = i.IngredientId, Name = i.Name }));
-            return cartItemIngredients;
+            return cartItemIngredients.OrderBy(i => i.Name).ToList();
         }
 
         public void Update(CartItem cartItem)
@@ -65,6 +65,32 @@ namespace HultansPizzeria.Services
             Cart cart = GetCart();
             cart.lineCollection.Add(cartItem);
             SaveCart(cart);
+        }
+
+        public int CalculateTotal()
+        {
+            Cart cart = GetCart();
+            var total = 0;
+            cart.lineCollection.ForEach(c => total += c.Price);
+
+            var allDishes = _context.Dishes.ToList();
+            var cartItemIds = cart.lineCollection.Select(c => c.DishId).ToList();
+            var dishes = new List<Dish>();
+            cartItemIds.ForEach(i => dishes.Add(allDishes.FirstOrDefault(d => d.DishId == i)));
+
+            var dishIngredientCount = dishes.Sum(d => d.DishIngredients.Count());
+
+            var cartIngredientCount = 0;
+            cart.lineCollection.ForEach(c => cartIngredientCount += c.Ingredients.Count);
+
+            for (int i = 0; i < cartIngredientCount; i++)
+            {
+                if (i + 1 > dishIngredientCount)
+                {
+                    total += 5;
+                }
+            }
+            return total;
         }
     }
 }
