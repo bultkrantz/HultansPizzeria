@@ -17,7 +17,7 @@ namespace HultansPizzeria.Models
             {
                 IngredientId = di.IngredientId,
                 Name = di.Ingredient.Name,
-                AddToDish = true
+                Price = di.Ingredient.Price
             }));
 
             lineCollection.Add(new CartItem()
@@ -26,17 +26,18 @@ namespace HultansPizzeria.Models
                 DishId = dish.DishId,
                 Name = dish.Name,
                 Price = dish.Price,
-                Ingredients = ingredients
+                Ingredients = ingredients,
+                Modified = false
             });
-           
+
         }
 
         public virtual void RemoveLine(CartItem cartItem) =>
-       lineCollection.RemoveAll(c => c.CartItemId == cartItem.CartItemId);
+        lineCollection.RemoveAll(c => c.CartItemId == cartItem.CartItemId);
 
-        public virtual int GetCartLine() => lineCollection.Count();  
+        public virtual int GetCartLine() => lineCollection.Count();
 
-     
+
     }
-   
+
 }

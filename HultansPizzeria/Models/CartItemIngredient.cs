@@ -9,6 +9,6 @@ namespace HultansPizzeria.Models
     {
         public int IngredientId { get; set; }
         public string Name { get; set; }
-        public bool AddToDish { get; set; }
+        public int Price { get; set; }
     }
 }

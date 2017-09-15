@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/HultansPizzeria",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:49980/",
       "sslPort": 44389
@@ -15,14 +19,6 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
-    },
-    "HultansPizzeria": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://localhost:49981/"
     }
   }
 }

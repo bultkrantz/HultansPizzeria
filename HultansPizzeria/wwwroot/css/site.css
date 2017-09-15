@@ -1,6 +1,7 @@
 ﻿body {
     font-family: Roboto;
-  }
+    padding-top: 0px;
+}
 
 .page-content {
     padding: 60px;
@@ -38,4 +39,31 @@ a:hover, a:visited, a:link, a:active {
 
 .flimmer {
     visibility: hidden;
+}
+
+/*---- Navbar design ----*/
+
+.main-nav {
+    background: url('../images/hultans-banner.jpg') center / cover;
+}
+
+.brand-logo {
+    -webkit-text-stroke: 0.5px white;
+    transition: 0.5s;
+}
+
+    .brand-logo:hover {
+        color: rgb(115, 35, 35);
+        cursor: pointer;
+    }
+
+
+.mobile-logout button {
+    width: 270px;
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    height: 48px;
+    line-height: 48px;
+    margin: 10px 15px;
 }

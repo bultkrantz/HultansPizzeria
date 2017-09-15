@@ -1,5 +1,4 @@
 ﻿@model CheckoutViewModel
-@inject ICartService CartService
 @inject SignInManager<ApplicationUser> SignInManager
 
 
@@ -25,45 +24,26 @@
     <div class="col l8 m12 s12">
         <div class="container">
 
-            @if (!SignInManager.IsSignedIn(User) || Model.User == null)
+            @if (!SignInManager.IsSignedIn(User))
             {
-                <div class="row collection">
-                    <h5 class="center-align red-text text-lighten-1">Logga in</h5>
-                    <h6 class="center-align">Logga in för att få rabatter på dina beställningar</h6>
-                    <form asp-controller="Account" asp-action="Login" method="post">
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <i class="material-icons prefix">account_circle</i>
-                                <input asp-for="@Model.Email" name="Email" class="validate">
-                                <label asp-for="@Model.Email">Användarnamn</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <i class="material-icons prefix">lock</i>
-                                <input asp-for="@Model.Email" name="Password" type="password" class="validate">
-                                <label asp-for="@Model.Email">Lösenord</label>
-                            </div>
-                        </div>
-                        <div class="center-align">
-                            <button class="btn waves-effect waves-light red lighten-1" type="submit">
-                                Logga in
-                            </button>
-                        </div>
-                    </form>
-                </div>
+              
+                    Html.RenderPartial("_CheckoutLoginPartial", Model.LoginViewModel);
+                
+
 
                 <div class="row collection">
-                    <form action="#">
-                        <h5 class="center-align red-text text-lighten-1">Fortsätt som gäst</h5>
+                    <form asp-controller="Order" asp-action="Checkout" method="post">
+                        <h5 class="center-align red-text text-lighten-1">Eller fortsätt som gäst</h5>
                         <blockquote>
                             <b>Leveranssätt</b>
                         </blockquote>
                         <p>
-                            <input required name="group1" type="radio" id="test1" />
-                            <label for="test1">Hemleverans</label>
+                            <input required name="DeliveryMethod" type="radio" id="home" value="Hem" />
+                            <label for="home">Hemleverans</label>
                         </p>
                         <p>
-                            <input required name="group1" type="radio" id="test2" />
-                            <label for="test2">Avhämtning</label>
+                            <input required name="DeliveryMethod" type="radio" id="collect" value="Hämta" />
+                            <label for="collect">Avhämtning</label>
                         </p>
 
                         <blockquote>
@@ -72,22 +52,22 @@
 
                         <div class="row">
                             <div class="input-field col s6">
-                                <input required id="adress" type="text" class="validate">
-                                <label for="adress">Adress</label>
+                                <input minlength="6" maxlength="100" asp-for="Address" class="validate">
+                                <label asp-for="Address">Adress</label>
                             </div>
                             <div class="input-field col s6">
-                                <input required id="apartment_number" type="text" class="validate">
-                                <label for="apartment_number">Lgh.nr.</label>
+                                <input min="0" max="9999" asp-for="ApartmentNumber" type="text" class="validate">
+                                <label asp-for="ApartmentNumber">Lgh.nr.</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="stair_level" type="text" class="validate">
-                                <label for="stair_level">Våning</label>
+                                <input min="0" max="99" asp-for="Floor" class="validate">
+                                <label asp-for="Floor">Våning</label>
                             </div>
                             <div class="input-field col s6">
-                                <input id="door_code" type="text" class="validate">
-                                <label for="door_code">Portkod</label>
+                                <input min="0" max="9999" asp-for="EntryCode" class="validate">
+                                <label asp-for="EntryCode">Portkod</label>
                             </div>
                         </div>
 
@@ -95,13 +75,17 @@
                             <b>Betalningssätt</b>
                         </blockquote>
 
-                        <p>
-                            <input required name="payment" type="radio" id="mastercard" />
-                            <label for="mastercard">MasterCard</label>
+                        <p class="valign-wrapper">
+                            <input required name="PaymentMethod" type="radio" id="mastercard" value="mastercard" />
+                            <label for="mastercard">
+                                <img data-tooltip="Mastercard" data-position="bottom" data-delay="50" class="tooltipped" src="~/images/mastercard.jpg" style="height: 100%;" />
+                            </label>
                         </p>
-                        <p>
-                            <input required name="payment" type="radio" id="visa" />
-                            <label for="visa">Visa</label>
+                        <p class="valign-wrapper">
+                            <input required name="PaymentMethod" type="radio" id="visa" value="visa" />
+                            <label for="visa">
+                                <img data-tooltip="Visa" data-position="bottom" data-delay="50" class="tooltipped" src="~/images/visa.jpg" style="height: 100%;" />
+                            </label>
                         </p>
 
                         <div class="center-align">
@@ -117,18 +101,18 @@
             else
             {
                 <div class="row collection">
-                    <form action="#">
+                    <form asp-controller="Order" asp-action="Checkout" method="post">
                         <h5 class="center-align red-text text-lighten-1">Beställer som @Model.User.FirstName @Model.User.LastName</h5>
                         <blockquote>
                             <b>Leveranssätt</b>
                         </blockquote>
                         <p>
-                            <input required name="group1" type="radio" id="test1" />
-                            <label for="test1">Hemleverans</label>
+                            <input required name="DeliveryMethod" type="radio" id="home" value="Hem" />
+                            <label for="home">Hemleverans</label>
                         </p>
                         <p>
-                            <input required name="group1" type="radio" id="test2" />
-                            <label for="test2">Avhämtning</label>
+                            <input required name="DeliveryMethod" type="radio" id="collect" value="Hämta" />
+                            <label for="collect">Avhämtning</label>
                         </p>
 
                         <blockquote>
@@ -137,22 +121,22 @@
 
                         <div class="row">
                             <div class="input-field col s6">
-                                <input required id="adress" type="text" class="validate" value="@Model.User.Address">
-                                <label for="adress">Adress</label>
+                                <input minlength="6" maxlength="100" required asp-for="Address" type="text" class="validate" value="@Model.User.Address">
+                                <label asp-for="Address">Adress</label>
                             </div>
                             <div class="input-field col s6">
-                                <input required id="apartment_number" type="text" class="validate" value="@Model.User.ApartmentNumber">
-                                <label for="apartment_number">Lgh.nr.</label>
+                                <input min="0" max="9999" required asp-for="ApartmentNumber" type="text" class="validate" value="@Model.User.ApartmentNumber">
+                                <label asp-for="ApartmentNumber">Lgh.nr.</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="stair_level" type="text" class="validate" value="@Model.User.Floor">
-                                <label for="stair_level">Våning</label>
+                                <input required min="0" max="99" asp-for="Floor" class="validate" value="@Model.User.Floor">
+                                <label asp-for="Floor">Våning</label>
                             </div>
                             <div class="input-field col s6">
-                                <input id="door_code" type="text" class="validate" value="@Model.User.EntryCode">
-                                <label for="door_code">Portkod</label>
+                                <input min="0" max="9999" asp-for="EntryCode" class="validate" value="@Model.User.EntryCode">
+                                <label asp-for="EntryCode">Portkod</label>
                             </div>
                         </div>
 
@@ -160,13 +144,17 @@
                             <b>Betalningssätt</b>
                         </blockquote>
 
-                        <p>
-                            <input required name="payment" type="radio" id="mastercard" />
-                            <label for="mastercard">MasterCard</label>
+                        <p class="valign-wrapper">
+                            <input required name="PaymentMethod" type="radio" id="mastercard" value="Mastercard" />
+                            <label for="mastercard">
+                                <img data-tooltip="Mastercard" data-position="bottom" data-delay="50" class="tooltipped" src="~/images/mastercard.jpg" style="height: 100%;" />
+                            </label>
                         </p>
-                        <p>
-                            <input required name="payment" type="radio" id="visa" />
-                            <label for="visa">Visa</label>
+                        <p class="valign-wrapper">
+                            <input required name="PaymentMethod" type="radio" id="visa" value="Visa" />
+                            <label for="visa">
+                                <img data-tooltip="Visa" data-position="bottom" data-delay="50" class="tooltipped" src="~/images/visa.jpg" style="height: 100%;" />
+                            </label>
                         </p>
 
                         <div class="center-align">
@@ -185,48 +173,11 @@
     </div>
 
     <div class="col l4 m12 s12">
-        @{
-            var total = 0;
+     
+        @{ 
+            Html.RenderPartial("_CheckoutCartPartial");
         }
-        <h5 class="center-align red-text text-lighten-1 text-uppercase">Beställning</h5>
-
-        <ul class="collection cart">
-            @if (CartService.GetCart().lineCollection.Count() < 1)
-            {
-                <li class="collection-item">
-                    <blockquote>
-                        <b>Varukorgen är tom</b>
-                    </blockquote>
-                </li>
-            }
-
-
-            @foreach (var cartItem in CartService.GetCart().lineCollection)
-            {
-                total += cartItem.Price;
-                <li class="collection-item">
-                    <blockquote>
-                        <b>@cartItem.Name</b>, @cartItem.Price kr<br />
-
-                        @for (int i = 0; i < cartItem.Ingredients.Count(); i++)
-                        {
-                            if (i + 1 < cartItem.Ingredients.Count())
-                            {
-                                <span>@cartItem.Ingredients[i].Name, </span>
-                            }
-                            else
-                            {
-                                <span>@cartItem.Ingredients[i].Name</span>
-                            }
-                        }
-
-                    </blockquote>
-
-                </li>
-            }
-        </ul>
-
-        <h5><b>Total: </b>@total kr</h5>
+       
     </div>
 </div>
 

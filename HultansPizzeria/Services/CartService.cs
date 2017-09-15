@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using static HultansPizzeria.Models.Cart;
 using HultansPizzeria.Data;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace HultansPizzeria.Services
 {
@@ -55,7 +56,7 @@ namespace HultansPizzeria.Services
         {
             var cartItemIngredients = new List<CartItemIngredient>();
             var ingredients = _context.Ingredients.ToList();
-            ingredients.ForEach(i => cartItemIngredients.Add(new CartItemIngredient { IngredientId = i.IngredientId, Name = i.Name }));
+            ingredients.ForEach(i => cartItemIngredients.Add(new CartItemIngredient { IngredientId = i.IngredientId, Name = i.Name, Price = i.Price }));
             return cartItemIngredients.OrderBy(i => i.Name).ToList();
         }
 
@@ -71,26 +72,37 @@ namespace HultansPizzeria.Services
         {
             Cart cart = GetCart();
             var total = 0;
+
             cart.lineCollection.ForEach(c => total += c.Price);
+            var allDishes = _context.Dishes.Include(d => d.DishIngredients).ToList();
+            var allCartItems = cart.lineCollection.ToList();
 
-            var allDishes = _context.Dishes.ToList();
-            var cartItemIds = cart.lineCollection.Select(c => c.DishId).ToList();
-            var dishes = new List<Dish>();
-            cartItemIds.ForEach(i => dishes.Add(allDishes.FirstOrDefault(d => d.DishId == i)));
-
-            var dishIngredientCount = dishes.Sum(d => d.DishIngredients.Count());
-
-            var cartIngredientCount = 0;
-            cart.lineCollection.ForEach(c => cartIngredientCount += c.Ingredients.Count);
-
-            for (int i = 0; i < cartIngredientCount; i++)
+            foreach (var cartItem in allCartItems)
             {
-                if (i + 1 > dishIngredientCount)
-                {
-                    total += 5;
-                }
+                var originalIngredients = allDishes.FirstOrDefault(d => cartItem.DishId == d.DishId).DishIngredients.ToList();
+                cartItem.Ingredients.ForEach(i => total = originalIngredients.Select(oi => oi.IngredientId).Contains(i.IngredientId) ? total : total += i.Price);
             }
+
             return total;
+        }
+
+        public int CalculateDishTotal(int dishId)
+        {
+            var total = 0;
+
+            var cartItem = GetCart().lineCollection.FirstOrDefault(ci => ci.DishId == dishId);
+            total = cartItem.Price;
+            var originalIngredients = _context.Dishes.Include(d => d.DishIngredients).FirstOrDefault(d => d.DishId == dishId).DishIngredients.ToList();
+            cartItem.Ingredients.ForEach(i => total = originalIngredients.Select(oi => oi.IngredientId).Contains(i.IngredientId) ? total : total += i.Price);
+      
+            return total;
+        }
+
+        public bool DishIsModified(int dishId)
+        {
+            var cartItem = GetCart().lineCollection.FirstOrDefault(ci => ci.DishId == dishId);
+            var originalIngredients = _context.Dishes.Include(d => d.DishIngredients).FirstOrDefault(d => d.DishId == dishId).DishIngredients.ToList();
+            return originalIngredients.Count != cartItem.Ingredients.Count;
         }
     }
 }

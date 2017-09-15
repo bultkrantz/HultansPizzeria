@@ -1,8 +1,6 @@
 ﻿@inject ICartService CartService
 
-@{
-            var total = 0;
-}
+
 <h5 class="center-align red-text text-lighten-1 text-uppercase">Beställning</h5>
 
 <ul class="collection cart">
@@ -18,10 +16,9 @@
 
     @foreach (var cartItem in CartService.GetCart().lineCollection)
             {
-                total += cartItem.Price;
         <li class="collection-item">
             <blockquote>
-                <b>@cartItem.Name</b>, @cartItem.Price kr<br />
+                @if (CartService.DishIsModified(cartItem.DishId)) {  <b>Modifierad @cartItem.Name</b> } else {  <b>@cartItem.Name</b> }, @CartService.CalculateDishTotal(cartItem.DishId) kr<br />
                 <a asp-controller="Cart" asp-action="Remove" asp-route-cartItemId="@cartItem.CartItemId" onclick="toastRemove('@cartItem.Name')"
                    data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#cart-container"
                    data-tooltip="Ta bort" data-position="bottom" data-delay="50" class="right tooltipped"><i class="material-icons red-text">delete</i></a>

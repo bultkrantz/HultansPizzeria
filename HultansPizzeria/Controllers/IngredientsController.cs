@@ -24,24 +24,7 @@ namespace HultansPizzeria.Controllers
             return View(await _context.Ingredients.ToListAsync());
         }
 
-        // GET: Ingredients/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var ingredient = await _context.Ingredients
-                .SingleOrDefaultAsync(m => m.IngredientId == id);
-            if (ingredient == null)
-            {
-                return NotFound();
-            }
-
-            return View(ingredient);
-        }
-
+       
         // GET: Ingredients/Create
         public IActionResult Create()
         {
@@ -53,7 +36,7 @@ namespace HultansPizzeria.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IngredientId,Name")] Ingredient ingredient)
+        public async Task<IActionResult> Create(Ingredient ingredient)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +68,7 @@ namespace HultansPizzeria.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IngredientId,Name")] Ingredient ingredient)
+        public async Task<IActionResult> Edit(int id, Ingredient ingredient)
         {
             if (id != ingredient.IngredientId)
             {

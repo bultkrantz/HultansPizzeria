@@ -39,15 +39,15 @@ namespace HultansPizzeria.Data
             {
 
                 //Ingredients
-                var cheese = new Ingredient { Name = "Cheese" };
-                var tomatoe = new Ingredient { Name = "Tomatoe" };
-                var ham = new Ingredient { Name = "Ham" };
-                var mincedMeat = new Ingredient { Name = "Minced meat" };
-                var shrimp = new Ingredient { Name = "Shrimp" };
-                var feta = new Ingredient { Name = "Feta" };
-                var bacon = new Ingredient { Name = "Bacon" };
-                var chicken = new Ingredient { Name = "Chicken" };
-                var pineapple = new Ingredient { Name = "Pineapple" };
+                var cheese = new Ingredient { Name = "Cheese", Price = 5 };
+                var tomatoe = new Ingredient { Name = "Tomatoe", Price = 5 };
+                var ham = new Ingredient { Name = "Ham", Price = 5 };
+                var mincedMeat = new Ingredient { Name = "Minced meat", Price = 5 };
+                var shrimp = new Ingredient { Name = "Shrimp", Price = 5 };
+                var feta = new Ingredient { Name = "Feta", Price = 5 };
+                var bacon = new Ingredient { Name = "Bacon", Price = 5 };
+                var chicken = new Ingredient { Name = "Chicken", Price = 5 };
+                var pineapple = new Ingredient { Name = "Pineapple", Price = 5 };
 
                 //Categories
                 var pizza = new Category { Name = "Pizza" };

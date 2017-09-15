@@ -20,6 +20,8 @@ namespace HultansPizzeria.Controllers
             _context = context;
             _userManager = userManager;
         }
+
+        [HttpGet]
         public async Task<IActionResult> Checkout()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -28,6 +30,17 @@ namespace HultansPizzeria.Controllers
                 User = user
             };
             return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Checkout(CheckoutViewModel model)
+        {
+            model.User = await _userManager.GetUserAsync(HttpContext.User);
+            if (ModelState.IsValid)
+            {
+                return View("OrderConfirmation", model);
+            }
+            return View(model);
         }
     }
 }
