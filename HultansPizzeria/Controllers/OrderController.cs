@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using HultansPizzeria.Data;
 using Microsoft.AspNetCore.Identity;
 using HultansPizzeria.Models;
+using HultansPizzeria.Services;
 
 namespace HultansPizzeria.Controllers
 {
@@ -14,11 +15,13 @@ namespace HultansPizzeria.Controllers
     {
         private ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ICartService _cartService;
 
-        public OrderController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public OrderController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, ICartService cartService)
         {
             _context = context;
             _userManager = userManager;
+            _cartService = cartService;
         }
 
         [HttpGet]
@@ -36,9 +39,21 @@ namespace HultansPizzeria.Controllers
         public async Task<IActionResult> Checkout(CheckoutViewModel model)
         {
             model.User = await _userManager.GetUserAsync(HttpContext.User);
+
+            var vm = new OrderConfirmationViewModel
+            {
+                Address = model.Address,
+                ApartmentNumber = model.ApartmentNumber,
+                Floor = model.Floor,
+                EntryCode = model.EntryCode,
+                DeliveryMethod = model.DeliveryMethod,
+                PaymentMethod = model.PaymentMethod,
+                Cart = _cartService.GetCart()
+            };
+            
             if (ModelState.IsValid)
             {
-                return View("OrderConfirmation", model);
+                return View("OrderConfirmation", vm);
             }
             return View(model);
         }

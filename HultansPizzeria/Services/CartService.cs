@@ -94,7 +94,7 @@ namespace HultansPizzeria.Services
             total = cartItem.Price;
             var originalIngredients = _context.Dishes.Include(d => d.DishIngredients).FirstOrDefault(d => d.DishId == dishId).DishIngredients.ToList();
             cartItem.Ingredients.ForEach(i => total = originalIngredients.Select(oi => oi.IngredientId).Contains(i.IngredientId) ? total : total += i.Price);
-      
+
             return total;
         }
 
@@ -103,6 +103,13 @@ namespace HultansPizzeria.Services
             var cartItem = GetCart().lineCollection.FirstOrDefault(ci => ci.DishId == dishId);
             var originalIngredients = _context.Dishes.Include(d => d.DishIngredients).FirstOrDefault(d => d.DishId == dishId).DishIngredients.ToList();
             return originalIngredients.Count != cartItem.Ingredients.Count;
+        }
+
+        public void ClearCart()
+        {
+            var cart = GetCart();
+            cart.lineCollection.Clear();
+            SaveCart(cart);
         }
     }
 }

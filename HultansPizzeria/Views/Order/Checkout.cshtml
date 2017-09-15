@@ -1,6 +1,6 @@
 ﻿@model CheckoutViewModel
 @inject SignInManager<ApplicationUser> SignInManager
-
+@inject ICartService CartService
 
 @{
     ViewData["Title"] = "Checkout";
@@ -175,7 +175,7 @@
     <div class="col l4 m12 s12">
      
         @{ 
-            Html.RenderPartial("_CheckoutCartPartial");
+            Html.RenderPartial("_CheckoutCartPartial", CartService.GetCart());
         }
        
     </div>

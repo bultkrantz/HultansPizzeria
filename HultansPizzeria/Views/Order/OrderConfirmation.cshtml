@@ -1,4 +1,6 @@
-﻿@model CheckoutViewModel
+﻿@model OrderConfirmationViewModel
+@inject ICartService CartService
+
 @{
     ViewData["Title"] = "OrderConfirmation";
 }
@@ -6,7 +8,8 @@
     <div class="col s4 offset-s4">
         <h2 class="teal-text text-lighten-1 center">Tack för din beställning!</h2>
         @{
-            Html.RenderPartial("_CheckoutCartPartial");
+            await Html.RenderPartialAsync("_CheckoutCartPartial");
+            CartService.ClearCart();
         }
     </div>
 </div>
@@ -19,27 +22,27 @@
                 <b>Beställningsdatum: </b>@DateTime.Now
             </li>
             <li class="collection-item">
-                    <b>Adress: </b>@Model.Address
+                <b>Adress: </b>@Model.Address
             </li>
             <li class="collection-item">
-                    <b>Lägenhetsnummer: </b>@Model.ApartmentNumber
+                <b>Lägenhetsnummer: </b>@Model.ApartmentNumber
             </li>
             <li class="collection-item">
-                    <b>Våning: </b>@Model.Floor
-            </li>
-           <li class="collection-item">
-                    <b>Portkod: </b>@Model.EntryCode
+                <b>Våning: </b>@Model.Floor
             </li>
             <li class="collection-item">
-                    <b>Leverans: </b>@Model.DeliveryMethod
+                <b>Portkod: </b>@Model.EntryCode
             </li>
             <li class="collection-item">
-                    <b>Betalningsmetod: </b>@Model.PaymentMethod
+                <b>Leverans: </b>@Model.DeliveryMethod
+            </li>
+            <li class="collection-item">
+                <b>Betalningsmetod: </b>@Model.PaymentMethod
             </li>
         </ul>
         <a class="btn waves-effect waves-light" asp-controller="Home" asp-action="Index">
             Tillbaka
         </a>
     </div>
-  </div>
+</div>
 

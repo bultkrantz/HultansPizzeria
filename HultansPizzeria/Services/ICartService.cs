@@ -20,5 +20,6 @@ namespace HultansPizzeria.Services
         int CalculateTotal();
         int CalculateDishTotal(int dishId);
         bool DishIsModified(int dishId);
+        void ClearCart();
     }
 }
