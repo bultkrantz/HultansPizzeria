@@ -14,7 +14,7 @@
 
             @foreach (var dish in Model.Dishes.Where(dish => dish.CategoryId == category.CategoryId))
             {
-                <div class="col m3 s6">
+                <div class="col xl3 l4 m6 s12">
                     <div class="card">
                         <div class="card-image" style="background: url('@dish.ImageUrl') center / cover;">
                             <span class="card-title">@dish.Name</span>

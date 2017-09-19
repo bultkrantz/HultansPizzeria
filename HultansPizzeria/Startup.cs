@@ -14,9 +14,12 @@ namespace HultansPizzeria
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private IHostingEnvironment _environment;
+
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            _environment = environment;
         }
 
         public IConfiguration Configuration { get; }
@@ -24,15 +27,17 @@ namespace HultansPizzeria
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-         options.UseInMemoryDatabase("DefaultConnection"));
+            if (_environment.IsProduction() || _environment.IsStaging())
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            else
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseInMemoryDatabase("DefaultConnection"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+     .AddEntityFrameworkStores<ApplicationDbContext>()
+     .AddDefaultTokenProviders();
 
             // Add application services.
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -71,6 +76,9 @@ namespace HultansPizzeria
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            if (_environment.IsProduction() || _environment.IsStaging())
+                context.Database.Migrate();
 
             DbInitializer.Initialize(context, userManager, roleManager);
         }

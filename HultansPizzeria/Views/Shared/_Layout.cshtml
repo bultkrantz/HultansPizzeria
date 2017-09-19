@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="~/lib/materialize/dist/css/materialize.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     @RenderSection("Css", required: false)
 
 
@@ -75,6 +76,31 @@
         @RenderBody()
     </div>
 
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Hultans Pizzeria</h5>
+                    <p class="grey-text text-lighten-4">Adress: Kungsgatan 24</p>
+                    <p class="grey-text text-lighten-4">Telefon: 999-99-99</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text">Sociala Medier</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3" href="#!"><i class="fa fa-facebook-official" aria-hidden="true"></i> Facebook</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2014 Copyright Hultans Pizzeria
+                <a class="grey-text text-lighten-4 right" href="#!">Mera Länkar</a>
+            </div>
+        </div>
+    </footer>
 
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/materialize/dist/js/materialize.min.js"></script>
