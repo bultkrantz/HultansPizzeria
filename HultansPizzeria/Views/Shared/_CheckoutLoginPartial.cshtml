@@ -5,12 +5,12 @@
     <h6 class="center-align">Logga in för att få rabatter på dina beställningar</h6>
     <form asp-controller="Account" asp-action="Login" method="post">
         <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s12 l6">
                 <i class="material-icons prefix">account_circle</i>
                 <input asp-for="@Model.Email" name="Email" class="validate">
                 <label asp-for="@Model.Email">Användarnamn</label>
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s12 l6">
                 <i class="material-icons prefix">lock</i>
                 <input asp-for="@Model.Email" name="Password" type="password" class="validate">
                 <label asp-for="@Model.Email">Lösenord</label>

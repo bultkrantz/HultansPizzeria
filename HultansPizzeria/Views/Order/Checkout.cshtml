@@ -88,6 +88,25 @@
                             </label>
                         </p>
 
+                        <blockquote>
+                            <b>Kortuppgifter</b>
+                        </blockquote>
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input min="14" max="14" asp-for="CardNumber" class="validate">
+                                <label asp-for="CardNumber">Kortnummer</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input asp-for="ExpireDate" class="validate">
+                                <label asp-for="ExpireDate">Utgångsdatum</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input min="3" max="3" asp-for="CCV" class="validate">
+                                <label asp-for="CCV">Portkod</label>
+                            </div>
+                        </div>
+
                         <div class="center-align">
                             <button class="btn waves-effect waves-light red lighten-1" type="submit">
                                 Skicka beställning
@@ -156,6 +175,26 @@
                                 <img data-tooltip="Visa" data-position="bottom" data-delay="50" class="tooltipped" src="~/images/visa.jpg" style="height: 100%;" />
                             </label>
                         </p>
+
+
+                        <blockquote>
+                            <b>Kortuppgifter</b>
+                        </blockquote>
+
+                        <div class="row">
+                            <div class="input-field col s5">
+                                <input minlength="14" maxlength="14" asp-for="CardNumber" class="validate">
+                                <label asp-for="CardNumber">Kortnummer</label>
+                            </div>
+                            <div class="input-field col s5">
+                                <input  class="datepicker" asp-for="ExpireDate" class="validate">
+                                <label asp-for="ExpireDate">Utgångsdatum</label>
+                            </div>
+                            <div class="input-field col s2">
+                                <input minlength="3" maxlength="3" asp-for="CCV" class="validate">
+                                <label asp-for="CCV">CCV</label>
+                            </div>
+                        </div>
 
                         <div class="center-align">
                             <button class="btn waves-effect waves-light red lighten-1" type="submit">

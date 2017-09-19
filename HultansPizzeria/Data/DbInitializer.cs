@@ -9,31 +9,35 @@ namespace HultansPizzeria.Data
 {
     public static class DbInitializer
     {
-        public static void Initialize(ApplicationDbContext dbContext, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task InitializeAsync(ApplicationDbContext dbContext, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            var aUser = new ApplicationUser()
+            if (dbContext.Users.ToList().Count == 0)
             {
-                UserName = "test@student.se",
-                Email = "test@student.se"
-            };
+                var aUser = new ApplicationUser()
+                {
+                    UserName = "test@student.se",
+                    Email = "test@student.se"
+                };
 
-            var r = userManager.CreateAsync(aUser, "Pa$$word1").Result;
-            var adminRole = new IdentityRole { Name = "Admin" };
-            var roleResult = roleManager.CreateAsync(adminRole);
+                var r = await userManager.CreateAsync(aUser, "Pa$$word1");
+                var adminRole = new IdentityRole { Name = "Admin" };
+                var roleResult = await roleManager.CreateAsync(adminRole);
 
-            var adminUser = new ApplicationUser
-            {
-                UserName = "admin@test.se",
-                Email = "admin@test.se",
-                FirstName = "Marcus",
-                LastName = "Hultkrantz",
-                Address = "Kungsgatan 24A",
-                EntryCode = "8888",
-                Floor = "2",
-                ApartmentNumber = "13"
-            };
-            var adminResult = userManager.CreateAsync(adminUser, "Pa$$word1").Result;
-            userManager.AddToRoleAsync(adminUser, "Admin");
+                var adminUser = new ApplicationUser
+                {
+                    UserName = "admin@test.se",
+                    Email = "admin@test.se",
+                    FirstName = "Marcus",
+                    LastName = "Hultkrantz",
+                    Address = "Kungsgatan 24A",
+                    EntryCode = "8888",
+                    Floor = "2",
+                    ApartmentNumber = "13"
+                };
+                var adminResult = await userManager.CreateAsync(adminUser, "Pa$$word1");
+                await userManager.AddToRoleAsync(adminUser, "Admin");
+            }
+             
 
             if (dbContext.Dishes.ToList().Count == 0)
             {
@@ -117,18 +121,18 @@ namespace HultansPizzeria.Data
 
 
                 //Add seed to inMem database
-                dbContext.Category.AddRange(pizza, pasta, sallad);
+                await dbContext.Category.AddRangeAsync(pizza, pasta, sallad);
 
-                dbContext.Ingredients.AddRange(cheese, tomatoe, ham, mincedMeat, shrimp, chicken, bacon, feta, pineapple);
+                await dbContext.Ingredients.AddRangeAsync(cheese, tomatoe, ham, mincedMeat, shrimp, chicken, bacon, feta, pineapple);
 
-                dbContext.DishIngredient.AddRange(capricciosaCheese, capricciosaTomatoe, capricciosaHam,
+                await dbContext.DishIngredient.AddRangeAsync(capricciosaCheese, capricciosaTomatoe, capricciosaHam,
                    alfredoChicken, carbonarabacon, bologneseMeat, chickenSalladChicken, shrimpSalladShrimp,
                    vegetarianSalladFeta, hawaiiCheese, hawaiiPineapple, hawaiiTomatoe, margarithaCheese, margarithaTomatoe);
 
-                dbContext.Dishes.AddRange(capricciosa, margaritha, hawaii, alfredo, bolognese, carbonara, 
-                    chickenSallad, shrimpSallad, vegetarianSallad);
+                await dbContext.Dishes.AddRangeAsync(capricciosa, margaritha, hawaii, alfredo, bolognese, carbonara,
+                     chickenSallad, shrimpSallad, vegetarianSallad);
 
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
             }
         }
     }

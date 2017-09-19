@@ -5,7 +5,7 @@
     ViewData["Title"] = "OrderConfirmation";
 }
 <div class="row">
-    <div class="col s4 offset-s4">
+    <div class="col s12 l4 offset-l4">
         <h2 class="teal-text text-lighten-1 center">Tack för din beställning!</h2>
         @{
             await Html.RenderPartialAsync("_CheckoutCartPartial");
@@ -14,7 +14,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col s4 offset-s4">
+    <div class="col s12 l4 offset-l4">
         <h5 class="center-align red-text text-lighten-1 text-uppercase">Beställningsinformation</h5>
 
         <ul class="collection">

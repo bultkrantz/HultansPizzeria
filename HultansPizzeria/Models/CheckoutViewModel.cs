@@ -1,4 +1,5 @@
 ﻿using HultansPizzeria.Models.AccountViewModels;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace HultansPizzeria.Models
@@ -32,5 +33,20 @@ namespace HultansPizzeria.Models
 
         [Required]
         public string PaymentMethod { get; set; }
+
+        [Required]
+        [DataType(DataType.CreditCard)]
+        [Display(Name = "Kortnummer")]
+        public string CardNumber { get; set; }
+
+        [Required]
+        [DataType(DataType.DateTime)]
+        [Display(Name = "Utgångsdatum")]
+        public DateTime ExpireDate { get; set; }
+
+        [Required]
+        [StringLength(3, MinimumLength = 3, ErrorMessage = "Not a valid CCV")]
+        [Display(Name = "CCV")]
+        public string CCV { get; set; }
     }
 }

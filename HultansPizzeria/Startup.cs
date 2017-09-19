@@ -80,7 +80,7 @@ namespace HultansPizzeria
             if (_environment.IsProduction() || _environment.IsStaging())
                 context.Database.Migrate();
 
-            DbInitializer.Initialize(context, userManager, roleManager);
+            DbInitializer.InitializeAsync(context, userManager, roleManager).Wait();
         }
     }
 }
